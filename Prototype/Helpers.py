@@ -13,3 +13,10 @@ def exprice(price_string):
 
 def clean_string():
     pass
+
+
+# For Unit  Testing / Sample Runs
+if __name__ == "__main__":
+    s = "adskba pkr2500/-sadasd"
+    print(exprice(s))
+    print(type(exprice(s)))
