@@ -5,13 +5,13 @@ import time
 from Sheet import Sheet
 
 initialurl = "https://diners.com.pk"
-allProductsforWriting = []  #Write to google sheets
-productsURL = []  #URL of all the products
+allProductsforWriting = []  # Write to google sheets
+productsURL = []  # URL of all the products
 
-#-----------------------------
+# -----------------------------
 breakout = requests.get(initialurl)
 soup = BeautifulSoup(breakout.text, "html.parser")
-oneStep = soup.find("li", class_= "menu-lv-1 item dropdown mega-menu")
+oneStep = soup.find("li", class_="menu-lv-1 item dropdown mega-menu")
 twoStep = oneStep.find_all("span")
 menShirts = ""
 for span in twoStep:
@@ -42,7 +42,7 @@ while 1:
         eachProduct = initialurl + anchorProduct["href"]
         productsURL.append(eachProduct)
     pagination = soupForMenShirts.find("ul", class_="pagination-page")
-    currPage = int(pagination.find("li", class_= "active").find("span").string)
+    currPage = int(pagination.find("li", class_="active").find("span").string)
     nextPage = currPage + 1
     isNextPage = pagination.find(text=nextPage)
     if isNextPage:
@@ -75,47 +75,43 @@ for productURL in productsURL:
             if anchor['href'][0] == "/":
                 imagesURL.append(anchor['href'])
 
-
     # ------------------------------- OFF
-    off = soupForShirt.find("strong", class_= "label sale-label")
+    off = soupForShirt.find("strong", class_="label sale-label")
     offVal = 0
     if off:
-        temp = str (off.string).strip()
+        temp = str(off.string).strip()
         temp = temp[1:3]
-        offVal = float (temp)
+        offVal = float(temp)
+
+    # -------------------------------- SKU
+    sku_product = soupForShirt.find("div", class_="sku-product")
+    sku = str(sku_product.find("span").string.strip())
+
+    # ------------------------------- Availability
+    product_availability = soupForShirt.find("div", class_="product-inventory")
+    available = str(product_availability.find("span").string.strip())
 
 
-    #-------------------------------- SKU
-    sku_product = soupForShirt.find("div", class_= "sku-product")
-    sku = str (sku_product.find("span").string.strip())
-
-
-    #------------------------------- Availability
-    product_availability = soupForShirt.find("div", class_= "product-inventory")
-    available = str (product_availability.find("span").string.strip())
-
-
-    #-------------------------------- Selling Price
+    # -------------------------------- Selling Price
     def priceParser(price):
         myPrice = ""
         for i in price:
             if i != ",":
                 myPrice += i
-        myPrice = float (myPrice)
+        myPrice = float(myPrice)
         return myPrice
 
 
-    price_product = soupForShirt.find("div", class_= "prices")
+    price_product = soupForShirt.find("div", class_="prices")
     if offVal != 0:
-        price = price_product.find("span", class_= "price on-sale")
-        money = priceParser(str (price.find("span", class_="money").string)[3:])
+        price = price_product.find("span", class_="price on-sale")
+        money = priceParser(str(price.find("span", class_="money").string)[3:])
     else:
         price = price_product.find("span", class_="price")
-        money = priceParser(str (price.find("span", class_="money").string)[3:])
+        money = priceParser(str(price.find("span", class_="money").string)[3:])
 
-
-    #----------------------------- Size & Color
-    productAttr = soupForShirt.find(id= "product-variants").find_all("option", disabled= "")
+    # ----------------------------- Size & Color
+    productAttr = soupForShirt.find(id="product-variants").find_all("option", disabled="")
     colorXsize = ""
     for eachProduct in productAttr:
         attr = str(eachProduct.string).strip()
@@ -127,9 +123,8 @@ for productURL in productsURL:
         else:
             colorXsize = colorXsize + attr + ":"
 
-
-    #------------------------------ Extras
-    extras = soupForShirt.find("div", class_= "tab-content")
+    # ------------------------------ Extras
+    extras = soupForShirt.find("div", class_="tab-content")
     extra_Atrr = extras.find_all("li")
     shirtType = "nan"
     fit = "nan"
@@ -139,27 +134,27 @@ for productURL in productsURL:
     cuffStyle = "nan"
 
     for extra in extra_Atrr:
-        temp = str (extra.string)
+        temp = str(extra.string)
         temp = temp.split(":")
         if temp[0] == "Fabric":
-            fabric = str (temp[1]).strip()
+            fabric = str(temp[1]).strip()
         elif temp[0] == "Shirt Type":
-            shirtType = str (temp[1]).strip()
+            shirtType = str(temp[1]).strip()
         elif temp[0] == "Sleeves":
-            sleeves = str (temp[1]).strip()
+            sleeves = str(temp[1]).strip()
         elif temp[0] == "Collars Type":
-             collarType = str (temp[1]).strip()
+            collarType = str(temp[1]).strip()
         elif temp[0] == "Fit":
-            fit = str (temp[1]).strip()
+            fit = str(temp[1]).strip()
 
-    #All details about products here (Make a object to save in google sheets)
-    if available == "In stock":  #IF Not available do not show
+    # All details about products here (Make a object to save in google sheets)
+    if available == "In stock":  # IF Not available do not show
         currProduct = {
             "SKU": sku,
             "Selling_Price": money,
             "Size": colorXsize,
             "Type": shirtType,
-            "Product_Url": str (productURL).strip(),
+            "Product_Url": str(productURL).strip(),
             "Discount": offVal,
             "Fabric": fabric,
             "Fit": fit,
@@ -173,9 +168,5 @@ for productURL in productsURL:
         allProductsforWriting.append(currProduct)
         print(currProduct)
 
-
 sheet = Sheet(name="Panda Mall Data")
 sheet.write_all(all_rows=allProductsforWriting)
-
-
-
