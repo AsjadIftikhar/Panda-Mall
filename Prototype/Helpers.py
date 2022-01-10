@@ -11,8 +11,13 @@ def exprice(price_string):
     return price.group(0) if price else 0
 
 
-def clean_string():
-    pass
+def clean_string(input_string, include) -> str:
+    if input_string:
+        input_string = "".join(
+            [letter if (letter.isalpha() or letter.isdigit() or letter in include or letter == " ") else " " for letter
+             in input_string]
+        )
+        return input_string.strip()
 
 
 # For Unit  Testing / Sample Runs
