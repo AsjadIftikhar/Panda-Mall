@@ -12,12 +12,16 @@ def exprice(price_string):
 
 
 def clean_string(input_string, include) -> str:
+    output_string = ""
     if input_string:
-        input_string = "".join(
-            [letter if (letter.isalpha() or letter.isdigit() or letter in include or letter == " ") else " " for letter
-             in input_string]
-        )
-        return input_string.strip()
+        input_string = input_string.split()
+        for word in input_string:
+            if word:
+                clean_word = "".join(
+                    [letter if (letter.isalpha() or letter.isdigit() or letter in include) else " " for letter in word]
+                )
+                output_string += clean_word + " "
+        return output_string.strip()
 
 
 # For Unit  Testing / Sample Runs
@@ -25,3 +29,6 @@ if __name__ == "__main__":
     s = "adskba pkr2500/-sadasd"
     print(exprice(s))
     print(type(exprice(s)))
+
+    s = "A   -bc"
+    print(clean_string(s, []))
