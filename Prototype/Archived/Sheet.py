@@ -29,15 +29,16 @@ class Sheet:
 
 
 # # For Unit  Testing / Sample Run
-# if __name__ == "__main__":
-#     # Key Should match Google Sheet Headers
-#     # Values should be correctly formatted
-#     all_rows = [
-#         {
-#             "SKU": "AD25197-BLACK",
-#             "Selling_Price": 2952.0,
-#             "Size": 15.5,
-#         }
-#     ]
-#     mySheet = Sheet(name="Panda Mall Data")
-#     mySheet.write_all(all_rows=all_rows)
+if __name__ == "__main__":
+    pass
+    # Key Should match Google Sheet Headers
+    # Values should be correctly formatted
+    # all_rows = [
+    #     {
+    #         "SKU": "AD25197-BLACK",
+    #         "Selling_Price": 2952.0,
+    #         "Size": 15.5,
+    #     }
+    # ]
+    # mySheet = Sheet(name="Panda Mall Data")
+    # mySheet.write_all(all_rows=all_rows)
