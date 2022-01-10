@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-class Sheet:
+class ExcelSheet:
     def __init__(self, sheet_name):
         # Name of the File
         self.__filename = "Sheets/{}.xlsx".format(sheet_name)
@@ -39,5 +39,5 @@ if __name__ == "__main__":
 
         }
     ]
-    mySheet = Sheet("Uniworth")
+    mySheet = ExcelSheet("Uniworth")
     mySheet.write_all(all_rows=all_rows)
