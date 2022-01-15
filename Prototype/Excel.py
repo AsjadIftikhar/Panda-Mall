@@ -4,7 +4,7 @@ import pandas as pd
 class ExcelSheet:
     def __init__(self, sheet_name):
         # Name of the File
-        self.__filename = "Sheets/{}.xlsx".format(sheet_name)
+        self.__filename = "../Sheets/{}.xlsx".format(sheet_name)
 
         # Sheet Name inside the Workbook
         self.__sheet_name = sheet_name
