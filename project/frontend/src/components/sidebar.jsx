@@ -46,7 +46,7 @@ class Sidebar extends Component {
                     </a>
 
                     <nav>
-                        <ul className="space-y-2 border-t border-gray-200">
+                        <ul className="space-y-2 border-t border-gray-600">
                             <li>
                                 <a href="#"
                                    className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-400 dark:hover:bg-gray-700">
@@ -102,7 +102,7 @@ class Sidebar extends Component {
                                 </a>
                             </li>
                         </ul>
-                        <ul className="pt-4 mt-4 space-y-2 border-t border-gray-200 dark:border-gray-700">
+                        <ul className="pt-4 mt-4 space-y-2 border-t border-gray-600 dark:border-gray-700">
                             <li>
                                 <a href="#"
                                    className="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg transition duration-75 hover:bg-gray-400 dark:hover:bg-gray-700 dark:text-white group">

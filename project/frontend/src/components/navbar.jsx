@@ -5,10 +5,14 @@ import profile from './profile.svg'
 class Navbar extends Component {
     render() {
         return (
-
-            <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
+            <nav className="bg-white border-b border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
                 <div className="container flex flex-wrap justify-between items-center mx-auto">
                     <div className="flex items-center md:order-2">
+                        <button type="button"
+                                className="mr-3 mt-2 py-2 px-4 font-bold text-center text-green-400 hover: border border-green-400 hover: focus:ring-4 focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">
+                            Rs.143/-
+                        </button>
+
                         <button type="button"
                                 className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
                                 id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
@@ -98,16 +102,14 @@ class Navbar extends Component {
                                 </svg>
                             </div>
                             <input type="text" id="email-adress-icon"
-                                   className="block p-2 pl-10 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 sm:text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                   className="block p-2 pl-10 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-600 sm:text-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                    placeholder="Search..."/>
                         </div>
                     </div>
                 </div>
             </nav>
-
-
-    );
+        );
     }
-    }
+}
 
-    export default Navbar;
+export default Navbar;

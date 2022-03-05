@@ -11,7 +11,7 @@ function App() {
         <Fragment>
             <div className="relative min-h-screen md:flex">
                 <Sidebar/>
-                <div className="flex-1">
+                <div className="flex-1 px-6">
                     <Navbar/>
                     <Breadcrumb/>
                     <Products/>
