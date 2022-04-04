@@ -1,15 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {NavLink} from "react-router-dom";
 
-// // grab everything we need
-//     const btn = document.querySelector(".mobile-menu-button");
-//     const sidebar = document.querySelector(".sidebar");
-//
-//     // add our event listener for the click
-//     btn.addEventListener("click", () => {
-//         sidebar.classList.toggle("-translate-x-full");
-//     });
-
 class Sidebar extends Component {
     render() {
         return (
@@ -85,7 +76,7 @@ class Sidebar extends Component {
                                     </svg>
                                     <span className="flex-1 ml-3 whitespace-nowrap text-white">Products</span>
                                     <span
-                                        className="inline-flex justify-center items-center p-3 ml-3 w-3 h-3 text-sm font-medium text-blue-600 bg-blue-200 rounded-full dark:bg-blue-900 dark:text-blue-200">3</span>
+                                        className="inline-flex justify-center items-center p-4 ml-4 w-4 h-4 text-sm font-medium text-blue-600 bg-blue-200 rounded-full dark:bg-blue-900 dark:text-blue-200">{ this.props.products_count }</span>
 
                                 </NavLink>
                             </li>

@@ -4,8 +4,10 @@ import {paginate} from "../utils/paginate";
 
 class Products extends Component {
     state = {
-        pageSize: 5,
-        currentPage: 1
+        pageSize: 25,
+        currentPage: 1,
+
+        selectedItemToDelete: 0,
     };
     handlePageChange = page => {
         this.setState({currentPage: page})
@@ -52,7 +54,12 @@ class Products extends Component {
                                             </svg>
                                             <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are
                                                 you sure you want to delete this product?</h3>
-                                            <button data-modal-toggle="popup-modal" type="button"
+                                            <button onClick={
+                                                () => {
+                                                    this.props.onDelete(this.state.selectedItemToDelete)
+                                                }
+                                            }
+                                                    data-modal-toggle="popup-modal" type="button"
                                                     className="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                                                 Yes, I'm sure
                                             </button>
@@ -254,7 +261,13 @@ class Products extends Component {
                                                     </svg>
                                                     Edit item
                                                 </button>
-                                                <button type="button" data-modal-toggle="popup-modal"
+                                                <button onClick={
+                                                    () => {
+                                                        this.setState({selectedItemToDelete: product.SKU})
+                                                        console.log(this.state.selectedItemToDelete)
+                                                    }
+                                                }
+                                                        type="button" data-modal-toggle="popup-modal"
                                                         className="text-white bg-gradient-to-r from-red-500 via-red-600 to-red-700 shadow shadow-red-500/50 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">
                                                     <svg className="mr-2 h-5 w-5" fill="currentColor"
                                                          viewBox="0 0 20 20"
