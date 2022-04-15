@@ -4,17 +4,42 @@ import {paginate} from "../utils/paginate";
 
 class Products extends Component {
     state = {
-        pageSize: 25,
+        pageSize: 15,
         currentPage: 1,
 
         selectedItemToDelete: 0,
+
+        product: {
+            "SKU": "",
+            "Product_Title": "",
+            "Color": "",
+            "Selling_Price": "",
+            "Image_Url": "",
+        }
+
     };
     handlePageChange = page => {
         this.setState({currentPage: page})
     }
 
+    handleFormChange = e => {
+        const product = {...this.state.product};
+        product[e.currentTarget.name] = e.currentTarget.value;
+        this.setState({product});
+    }
+    handleAddProduct = e => {
+        e.preventDefault();
+        this.props.onAdd((this.state.product))
+    }
+
+    handleEditProduct = e => {
+        e.preventDefault();
+
+        this.props.onEdit((this.state.product))
+    }
+
     render() {
-        const {pageSize, currentPage} = this.state;
+        const {pageSize, currentPage, product} = this.state;
         if (this.props.products.length === 0) return <p>No Products Found</p>
 
         const products = paginate(this.props.products, currentPage, pageSize);
@@ -72,9 +97,9 @@ class Products extends Component {
                                 </div>
                             </div>
                             {/*Delete Modal End*/}
-                            {/*Form Modal*/}
 
-                            <div id="authentication-modal" aria-hidden="true"
+                            {/*Add Product Form Modal*/}
+                            <div id="products-add-modal" aria-hidden="true"
                                  className="hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
 
                                 <div className="relative w-full max-w-2xl px-4 h-full md:h-auto">
@@ -83,11 +108,11 @@ class Products extends Component {
 
                                         <div className="flex items-start justify-between p-5 border-b rounded-t">
                                             <h3 className="text-xl font-semibold">
-                                                Add product
+                                                Add a new product
                                             </h3>
                                             <button type="button"
                                                     className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-                                                    data-modal-toggle="add-product-modal">
+                                                    data-modal-toggle="products-add-modal">
                                                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                                      xmlns="http://www.w3.org/2000/svg">
                                                     <path fill-rule="evenodd"
@@ -98,61 +123,191 @@ class Products extends Component {
                                         </div>
 
                                         <div className="p-6 space-y-6">
-                                            <form action="#">
+                                            <form onSubmit={this.handleAddProduct}>
                                                 <div className="grid grid-cols-6 gap-6">
                                                     <div className="col-span-6 sm:col-span-3">
                                                         <label htmlFor="product-name"
-                                                               className="text-sm font-medium text-gray-900 block mb-2">Product
-                                                            Name</label>
-                                                        <input type="text" name="product-name" id="product-name"
+                                                               className="text-sm font-medium text-gray-900 block mb-2">SKU</label>
+                                                        <input type="text"
+                                                               name="SKU"
+                                                               id="SKU"
                                                                className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                                               placeholder="Apple Imac 27”" required=""/>
+                                                               placeholder="FS1297SF"
+                                                               value={product.SKU}
+                                                               onChange={this.handleFormChange}
+                                                               required=""/>
                                                     </div>
                                                     <div className="col-span-6 sm:col-span-3">
                                                         <label htmlFor="category"
-                                                               className="text-sm font-medium text-gray-900 block mb-2">Category</label>
-                                                        <input type="text" name="category" id="category"
+                                                               className="text-sm font-medium text-gray-900 block mb-2">Title</label>
+                                                        <input type="text"
+                                                               name="Product_Title"
+                                                               id="Product_Title"
+                                                               value={product.Product_Title}
+                                                               onChange={this.handleFormChange}
                                                                className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                                               placeholder="Electronics" required=""/>
+                                                               placeholder="Plain Brown Smart Fit Shirt"
+                                                               required=""/>
                                                     </div>
                                                     <div className="col-span-6 sm:col-span-3">
                                                         <label htmlFor="brand"
-                                                               className="text-sm font-medium text-gray-900 block mb-2">Brand</label>
-                                                        <input type="text" name="brand" id="brand"
+                                                               className="text-sm font-medium text-gray-900 block mb-2">Color</label>
+                                                        <input type="text"
+                                                               name="Color"
+                                                               id="Color"
+                                                               value={product.Color}
+                                                               onChange={this.handleFormChange}
                                                                className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                                               placeholder="Apple" required=""/>
+                                                               placeholder="Brown"
+                                                               required=""/>
                                                     </div>
                                                     <div className="col-span-6 sm:col-span-3">
                                                         <label htmlFor="price"
                                                                className="text-sm font-medium text-gray-900 block mb-2">Price</label>
-                                                        <input type="number" name="price" id="price"
+                                                        <input type="number"
+                                                               name="Selling_Price"
+                                                               id="Selling_Price"
+                                                               value={product.Selling_Price}
+                                                               onChange={this.handleFormChange}
                                                                className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-                                                               placeholder="$2300" required=""/>
+                                                               placeholder="2300"
+                                                               required=""/>
                                                     </div>
                                                     <div className="col-span-full">
                                                         <label htmlFor="product-details"
-                                                               className="text-sm font-medium text-gray-900 block mb-2">Product
-                                                            Details</label>
-                                                        <textarea id="product-details" rows="6"
+                                                               className="text-sm font-medium text-gray-900 block mb-2">Image
+                                                            URL</label>
+                                                        <textarea id="Image_Url"
+                                                                  rows="4"
+                                                                  name="Image_Url"
+                                                                  value={product.Image_Url}
+                                                                  onChange={this.handleFormChange}
                                                                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-4"
-                                                                  placeholder="e.g. 3.8GHz 8-core 10th-generation Intel Core i7 processor, Turbo Boost up to 5.0GHz, Ram 16 GB DDR4 2300Mhz"/>
+                                                                  placeholder="https://uniworthdress.com/uploads/product/webp/FS1297SF..webp"/>
                                                     </div>
+                                                </div>
+                                                <div className="p-6 border-t border-gray-200 rounded-b">
+                                                    <button
+                                                        className="flex text-white bg-gradient-to-r from-cyan-500 via-cyan-600 to-cyan-700 hover:bg-gradient-to-br focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 shadow shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                                                        type="submit"
+                                                        data-modal-toggle="products-add-modal">
+                                                        Add product
+                                                    </button>
                                                 </div>
                                             </form>
                                         </div>
 
-                                        <div className="p-6 border-t border-gray-200 rounded-b">
-                                            <button
-                                                className="text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                                                type="submit">Add product
-                                            </button>
-                                        </div>
 
                                     </div>
                                 </div>
                             </div>
+                            {/*Add Product Form Modal End*/}
 
-                            {/*Form Modal End*/}
+                            {/*Edit Product Form Modal*/}
+                            <div id="products-edit-modal" aria-hidden="true"
+                                 className="hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
+
+                                <div className="relative w-full max-w-2xl px-4 h-full md:h-auto">
+
+                                    <div className="bg-white rounded-lg shadow relative">
+
+                                        <div className="flex items-start justify-between p-5 border-b rounded-t">
+                                            <h3 className="text-xl font-semibold">
+                                                Edit Selected Product
+                                            </h3>
+                                            <button type="button"
+                                                    className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+                                                    data-modal-toggle="products-edit-modal">
+                                                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                                     xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd"
+                                                          d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                                          clip-rule="evenodd"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+
+                                        <div className="p-6 space-y-6">
+                                            <form onSubmit={this.handleEditProduct}>
+                                                <div className="grid grid-cols-6 gap-6">
+                                                    <div className="col-span-6 sm:col-span-3">
+                                                        <label htmlFor="product-name"
+                                                               className="text-sm font-medium text-gray-900 block mb-2">SKU</label>
+                                                        <input type="text"
+                                                               name="SKU"
+                                                               id="SKU"
+                                                               className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                                                               placeholder="FS1297SF"
+                                                               value={product.SKU}
+                                                               onChange={this.handleFormChange}
+                                                               required=""/>
+                                                    </div>
+                                                    <div className="col-span-6 sm:col-span-3">
+                                                        <label htmlFor="category"
+                                                               className="text-sm font-medium text-gray-900 block mb-2">Title</label>
+                                                        <input type="text"
+                                                               name="Product_Title"
+                                                               id="Product_Title"
+                                                               value={product.Product_Title}
+                                                               onChange={this.handleFormChange}
+                                                               className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                                                               placeholder="Plain Brown Smart Fit Shirt"
+                                                               required=""/>
+                                                    </div>
+                                                    <div className="col-span-6 sm:col-span-3">
+                                                        <label htmlFor="brand"
+                                                               className="text-sm font-medium text-gray-900 block mb-2">Color</label>
+                                                        <input type="text"
+                                                               name="Color"
+                                                               id="Color"
+                                                               value={product.Color}
+                                                               onChange={this.handleFormChange}
+                                                               className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                                                               placeholder="Brown"
+                                                               required=""/>
+                                                    </div>
+                                                    <div className="col-span-6 sm:col-span-3">
+                                                        <label htmlFor="price"
+                                                               className="text-sm font-medium text-gray-900 block mb-2">Price</label>
+                                                        <input type="number"
+                                                               name="Selling_Price"
+                                                               id="Selling_Price"
+                                                               value={product.Selling_Price}
+                                                               onChange={this.handleFormChange}
+                                                               className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+                                                               placeholder="2300"
+                                                               required=""/>
+                                                    </div>
+                                                    <div className="col-span-full">
+                                                        <label htmlFor="product-details"
+                                                               className="text-sm font-medium text-gray-900 block mb-2">Image
+                                                            URL</label>
+                                                        <textarea id="Image_Url"
+                                                                  rows="4"
+                                                                  name="Image_Url"
+                                                                  value={product.Image_Url}
+                                                                  onChange={this.handleFormChange}
+                                                                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-4"
+                                                                  placeholder="https://uniworthdress.com/uploads/product/webp/FS1297SF..webp"/>
+                                                    </div>
+                                                </div>
+                                                <div className="p-6 border-t border-gray-200 rounded-b">
+                                                    <button
+                                                        className="flex text-white bg-gradient-to-r from-cyan-500 via-cyan-600 to-cyan-700 hover:bg-gradient-to-br focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 shadow shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                                                        type="submit"
+                                                        data-modal-toggle="products-edit-modal">
+                                                        Edit product
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            {/*Edit Product Form Modal End*/}
+
                             <div className="flex p-4">
                                 <label htmlFor="table-search" className="sr-only">Search</label>
                                 <div className="relative mt-1">
@@ -170,8 +325,8 @@ class Products extends Component {
                                            placeholder="Search for items"/>
                                 </div>
                                 <div className="flex items-center sm:justify-end w-full">
-                                    <button type="button" data-modal-toggle="authentication-modal"
-                                            className="flex text-white bg-gradient-to-r from-cyan-500 via-cyan-600 to-cyan-700 hover:bg-gradient-to-br focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 shadow shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 ">
+                                    <button type="button" data-modal-toggle="products-add-modal"
+                                            className="flex text-white bg-gradient-to-r from-cyan-500 via-cyan-600 to-cyan-700 hover:bg-gradient-to-br focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 shadow shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
 
                                         <svg class="-ml-1 mr-2 h-6 w-6" fill="currentColor" viewBox="0 0 20 20"
                                              xmlns="http://www.w3.org/2000/svg">
@@ -248,8 +403,13 @@ class Products extends Component {
                                             <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">{product.Color}</td>
                                             <td className="p-4 whitespace-nowrap space-x-4">
 
-                                                <button type="button" data-modal-toggle="product-modal"
-                                                        className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 shadow shadow-teal-500/50 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">
+                                                <button type="button" data-modal-toggle="products-edit-modal"
+                                                        className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 shadow shadow-teal-500/50 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center"
+                                                        onClick={() => {
+                                                            this.setState({product})
+                                                        }
+                                                        }
+                                                >
                                                     <svg className="mr-2 h-5 w-5" fill="currentColor"
                                                          viewBox="0 0 20 20"
                                                          xmlns="http://www.w3.org/2000/svg">
@@ -261,11 +421,9 @@ class Products extends Component {
                                                     </svg>
                                                     Edit item
                                                 </button>
-                                                <button onClick={
-                                                    () => {
-                                                        this.setState({selectedItemToDelete: product.SKU})
-                                                        console.log(this.state.selectedItemToDelete)
-                                                    }
+                                                <button onClick={() => {
+                                                    this.setState({selectedItemToDelete: product.SKU})
+                                                }
                                                 }
                                                         type="button" data-modal-toggle="popup-modal"
                                                         className="text-white bg-gradient-to-r from-red-500 via-red-600 to-red-700 shadow shadow-red-500/50 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center">

@@ -40,13 +40,13 @@ class Breadcrumb extends Component {
                                           clip-rule="evenodd"/>
                                 </svg>
                                 <span
-                                    className="ml-1 text-sm font-medium text-gray-400 md:ml-2 dark:text-gray-500">Products</span>
+                                    className="ml-1 text-sm font-medium text-gray-400 md:ml-2 dark:text-gray-500">{this.props.dir}</span>
                             </div>
                         </li>
                     </ol>
 
                 </nav>
-                <h1 className="text-xl sm:text-3xl font-bold text-gray-800 py-6 px-2">All Products</h1>
+                <h1 className="text-xl sm:text-3xl font-bold text-gray-800 py-6 px-2">{this.props.title}</h1>
             </div>
 
         );
