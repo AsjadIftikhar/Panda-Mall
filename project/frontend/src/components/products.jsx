@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Pagination from "./commons/pagination";
 import {paginate} from "../utils/paginate";
+import Search from "./commons/search";
 
 class Products extends Component {
     state = {
@@ -15,7 +16,9 @@ class Products extends Component {
             "Color": "",
             "Selling_Price": "",
             "Image_Url": "",
-        }
+        },
+
+        searchQuery: "",
 
     };
     handlePageChange = page => {
@@ -37,12 +40,24 @@ class Products extends Component {
 
         this.props.onEdit((this.state.product))
     }
+    handleSearch = query => {
+        this.setState({searchQuery: query, currentPage: 1})
+    }
+
 
     render() {
-        const {pageSize, currentPage, product} = this.state;
+        const {pageSize, currentPage, product, searchQuery} = this.state;
         if (this.props.products.length === 0) return <p>No Products Found</p>
 
-        const products = paginate(this.props.products, currentPage, pageSize);
+        let products = this.props.products
+        if (searchQuery) {
+            products = this.props.products.filter(m =>
+                m.Product_Title.toLowerCase().includes(searchQuery.toLowerCase())
+            );
+        } else {
+            products = paginate(this.props.products, currentPage, pageSize);
+        }
+
 
         return (
             <div className="mt-4 border border-slate-100">
@@ -320,9 +335,7 @@ class Products extends Component {
                                                   clip-rule="evenodd"/>
                                         </svg>
                                     </div>
-                                    <input type="text" id="table-search"
-                                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                           placeholder="Search for items"/>
+                                    <Search value={searchQuery} onChange={this.handleSearch}/>
                                 </div>
                                 <div className="flex items-center sm:justify-end w-full">
                                     <button type="button" data-modal-toggle="products-add-modal"
