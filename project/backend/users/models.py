@@ -1,29 +1,33 @@
-import uuid
 from django.db import models
-from ..api.models.products import Product
-from django.contrib.auth.models import User
+from api.models.products import Product
+from django.contrib.auth.models import AbstractUser
 
-class Customer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='details')
-    address = models.CharField(max_length=250)
+
+class BaseUser(AbstractUser):
+    """Abstract User class"""
+    address = models.CharField(max_length=255, null=True, blank=True)
+
+    class Meta:
+        abstract = True
+
+
+class Customer(BaseUser):
     favourite_products = models.ManyToManyField(Product, related_name='favourite_customers')
 
     def __str__(self):
-        return str(self.user)
+        return str(self.username)
 
-class Store(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='details')
+
+class Store(BaseUser):
     ntn = models.CharField(9)
     bank_account_number = models.CharField(16)
-    address = models.CharField(max_length=250)
     description = models.TextField()
 
     def __str__(self):
-        return str(self.user)
+        return str(self.username)
 
-class Admin(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='details')
-    address = models.CharField(max_length=250)
+
+class Admin(BaseUser):
 
     def __str__(self):
-        return str(self.user)
+        return str(self.username)

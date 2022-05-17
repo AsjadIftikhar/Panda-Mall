@@ -1,14 +1,16 @@
 from django.db import models
-from ..models.products import Product
-from ....backend.users.models import Customer
 
-class ProductHistory(models.Model):
+from api.models.base import BaseTimeStampedModel
+from api.models.products import Product
+from users.models import Customer
+
+
+class ProductHistory(BaseTimeStampedModel):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_history')
     customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING, related_name='product_history')
     clicks = models.FloatField()
-    time_stamp = models.DateTimeField()
     quantity = models.FloatField()
-    
+
     class Meta:
         unique_together = (('product', 'customer'),)
 
