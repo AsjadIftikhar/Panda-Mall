@@ -1,11 +1,9 @@
-from ast import Try
-from pyexpat import model
+from turtle import title
 import uuid
-from xml.dom.minidom import CharacterData
 from django.db import models
+from ...users.models import Store
 
 class Product(models.Model): 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     sku = models.CharField(max_length=100)
     title = models.CharField(max_length=200)
     description = models.TextField()
@@ -16,10 +14,17 @@ class Product(models.Model):
     approved = models.BooleanField()
     suspended = models.BooleanField()
     time_stamp = models.DateTimeField()
+    discount = models.FloatField() # Discount Percentage in Float
     quantity = models.FloatField(max_length=7)
-    
+    store = models.ForeignKey(Store, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return (self.title + " By " + self.store)
+
 class ProductCharacteristics(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     color = models.CharField(max_length=50)
     size = models.CharField(max_length=100)
     products = models.ManyToManyField(Product)
+
+    def __str__(self):
+        return (self.color + " : " + self.size)

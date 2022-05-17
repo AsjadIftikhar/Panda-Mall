@@ -1,26 +1,29 @@
 import uuid
 from django.db import models
+from ..api.models.products import Product
+from django.contrib.auth.models import User
 
 class Customer(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=200)
-    email = models.EmailField()
-    password = models.CharField(max_length=200)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     address = models.CharField(max_length=250)
+    favourite_products = models.ManyToManyField(Product)
+
+    def __str__(self):
+        return str(self.user)
 
 class Store(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=200)
-    email = models.EmailField()
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     ntn = models.CharField(9)
     bank_account_number = models.CharField(16)
-    password = models.CharField(max_length=200)
     address = models.CharField(max_length=250)
     description = models.TextField()
 
+    def __str__(self):
+        return str(self.user)
+
 class Admin(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=200)
-    email = models.EmailField()
-    password = models.CharField(max_length=200)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     address = models.CharField(max_length=250)
+
+    def __str__(self):
+        return str(self.user)
