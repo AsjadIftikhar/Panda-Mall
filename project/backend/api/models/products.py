@@ -16,7 +16,7 @@ class Product(models.Model):
     time_stamp = models.DateTimeField()
     discount = models.FloatField() # Discount Percentage in Float
     quantity = models.FloatField(max_length=7)
-    store = models.ForeignKey(Store, on_delete=models.CASCADE)
+    store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='products')
 
     def __str__(self):
         return (self.title + " By " + self.store)
@@ -24,7 +24,7 @@ class Product(models.Model):
 class ProductCharacteristics(models.Model):
     color = models.CharField(max_length=50)
     size = models.CharField(max_length=100)
-    products = models.ManyToManyField(Product)
+    products = models.ManyToManyField(Product, related_name='characteristics')
 
     def __str__(self):
         return (self.color + " : " + self.size)

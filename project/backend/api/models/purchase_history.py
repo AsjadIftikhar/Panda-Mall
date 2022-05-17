@@ -3,8 +3,8 @@ from ..models.products import Product
 from ....backend.users.models import Customer
 
 class ProductHistory(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    customer = models.ForeignKey(Customer, on_delete==models.DO_NOTHING)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_history')
+    customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING, related_name='product_history')
     clicks = models.FloatField()
     time_stamp = models.DateTimeField()
     quantity = models.FloatField()
