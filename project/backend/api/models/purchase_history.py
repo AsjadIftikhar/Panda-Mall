@@ -15,4 +15,4 @@ class ProductHistory(BaseTimeStampedModel):
         unique_together = (('product', 'customer'),)
 
     def __str__(self):
-        return (self.product + " Bought By " + self.customer)
+        return  "{product} and {customer}".format(product = self.product, customer = self.customer)

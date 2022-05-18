@@ -15,7 +15,7 @@ class Customer(BaseUser):
     favourite_products = models.ManyToManyField(Product, related_name='favourite_customers')
 
     def __str__(self):
-        return str(self.username)
+        return "{username}".format(username = self.username)
 
 
 class Store(BaseUser):
@@ -24,10 +24,11 @@ class Store(BaseUser):
     description = models.TextField()
 
     def __str__(self):
-        return str(self.username)
+        return "{username}".format(username=self.username)
 
 
 class Admin(BaseUser):
 
     def __str__(self):
-        return str(self.username)
+        return "{username}".format(username=self.username)
+
