@@ -1,5 +1,5 @@
 from django.db import models
-from users.models import Store
+from users.models import Store, Customer
 from api.models.base import BaseTimeStampedModel
 
 
@@ -39,3 +39,10 @@ class ProductCharacteristics(BaseTimeStampedModel):
 
     def __str__(self):
         return "{color} and {size}".format(color=self.color, size=self.size)
+
+class Favourite(BaseTimeStampedModel):
+    customer = models.ForeignKey(Customer, related_name='favourite_customers', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='favourite_products', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "{customer} likes {product}".format(customer=self.customer, product=self.product)
