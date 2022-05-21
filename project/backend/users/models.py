@@ -24,6 +24,9 @@ class Store(BaseUser):
     def __str__(self):
         return "{username}".format(username=self.username)
 
+    class Meta:
+        verbose_name = "Store"
+
 
 class Admin(BaseUser):
 
