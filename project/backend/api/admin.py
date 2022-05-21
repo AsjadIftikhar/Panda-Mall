@@ -2,9 +2,9 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import Product
-from .models import ProductHistory
-from .models import ProductCharacteristics
+from api.models.products import Product
+from api.models.purchase_history import ProductHistory
+from api.models.products import ProductCharacteristics
 
 
 admin.site.register(Product)

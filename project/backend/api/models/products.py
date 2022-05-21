@@ -10,7 +10,8 @@ class Product(BaseTimeStampedModel):
     CASUAL_SHIRTS = "Casual Shirts"
     DRESS_PANTS = "Dress Pants"
 
-    CATEGORY_CHOICES = ((FORMAL_SHIRTS,"Formal Shirts"),(CASUAL_SHIRTS,"Casual Shirts"),(DRESS_PANTS,"Dress Pants"))
+    CATEGORY_CHOICES = (
+    (FORMAL_SHIRTS, "Formal Shirts"), (CASUAL_SHIRTS, "Casual Shirts"), (DRESS_PANTS, "Dress Pants"))
     STATUS_CHOICES = ((APPROVED, "Approved"), (SUSPENDED, "Suspended"))
 
     sku = models.CharField(max_length=100)
@@ -28,7 +29,7 @@ class Product(BaseTimeStampedModel):
     store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='products')
 
     def __str__(self):
-        return "{title} By {store}".format(title = self.title, store = self.store)
+        return "{title} By {store}".format(title=self.title, store=self.store)
 
 
 class ProductCharacteristics(BaseTimeStampedModel):
@@ -37,4 +38,4 @@ class ProductCharacteristics(BaseTimeStampedModel):
     products = models.ManyToManyField(Product, related_name='characteristics')
 
     def __str__(self):
-        return "{color} and {size}".format(color = self.color, size = self.size)
+        return "{color} and {size}".format(color=self.color, size=self.size)
