@@ -5,7 +5,7 @@ from api.models.products import Product
 from users.models import Customer
 
 
-class ProductHistory(BaseTimeStampedModel):
+class PurchaseHistory(BaseTimeStampedModel):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_history')
     customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING, related_name='product_history')
     clicks = models.FloatField()

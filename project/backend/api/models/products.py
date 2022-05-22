@@ -26,7 +26,7 @@ class Product(BaseTimeStampedModel):
 
     discount = models.FloatField(max_length=2, null=True, blank=True)
     quantity = models.FloatField(max_length=7)
-    store = models.ForeignKey(Store, on_delete=models.CASCADE, related_name='products')
+    store = models.ForeignKey(Store, null=True, on_delete=models.CASCADE, related_name='products')
 
     def __str__(self):
         return "{title} By {store}".format(title=self.title, store=self.store)
@@ -35,7 +35,7 @@ class Product(BaseTimeStampedModel):
 class ProductCharacteristics(BaseTimeStampedModel):
     color = models.CharField(max_length=50)
     size = models.CharField(max_length=100)
-    products = models.ManyToManyField(Product, related_name='characteristics')
+    products = models.ForeignKey(Product, related_name='characteristics', on_delete=models.CASCADE)
 
     def __str__(self):
         return "{color} and {size}".format(color=self.color, size=self.size)
