@@ -5,7 +5,7 @@ import Search from "./commons/search";
 
 class Products extends Component {
     state = {
-        pageSize: 15,
+        pageSize: 5,
         currentPage: 1,
 
         selectedItemToDelete: 0,
