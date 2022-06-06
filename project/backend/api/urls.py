@@ -41,6 +41,6 @@ router = HyphenatedRouter()
 router.register("product", ProductViewSet, basename="product")
 router.register("productCharacteristic/(?P<product_id>\d+)", ProductCharacteristicsViewSet, basename="product-characteristic")
 router.register("favourite/(?P<customer_id>\d+)", FavoruiteViewSet, basename="favourite")
-router.register("purchasehistory/(?P<customer_id>\d+)", FavoruiteViewSet, basename="purchase-history")
+router.register("purchasehistory/(?P<customer_id>\d+)", PurchaseHistoryViewSet, basename="purchase-history")
 
 urlpatterns = [] + router.urls
