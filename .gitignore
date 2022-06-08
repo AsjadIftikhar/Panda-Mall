@@ -120,7 +120,9 @@ venv.bak/
 .dmypy.json
 dmypy.json
 
-.pyc
+*.pyc
+db.sqlite3
+
 
 # Pyre type checker
 .pyre/
