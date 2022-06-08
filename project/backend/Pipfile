@@ -10,6 +10,7 @@ drf-nested-routers = "*"
 django-rest-swagger = "*"
 markdown = "*"
 django-filter = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 

@@ -5,10 +5,11 @@ from rest_framework.routers import DefaultRouter, Route, escape_curly_brackets
 from api.views.products import (
     ProductViewSet,
     ProductCharacteristicsViewSet,
-    FavoruiteViewSet,
+    FavouriteViewSet,
 )
 
 from api.views.product_history import PurchaseHistoryViewSet
+
 
 # from users.views import (
 #     ChangePasswordView,
@@ -39,8 +40,9 @@ class HyphenatedRouter(DefaultRouter):
 
 router = HyphenatedRouter()
 router.register("product", ProductViewSet, basename="product")
-router.register("productCharacteristic/(?P<product_id>\d+)", ProductCharacteristicsViewSet, basename="product-characteristic")
-router.register("favourite/(?P<customer_id>\d+)", FavoruiteViewSet, basename="favourite")
+router.register("productCharacteristic/(?P<product_id>\d+)", ProductCharacteristicsViewSet,
+                basename="product-characteristic")
+router.register("favourite/(?P<customer_id>\d+)", FavouriteViewSet, basename="favourite")
 router.register("purchasehistory/(?P<customer_id>\d+)", PurchaseHistoryViewSet, basename="purchase-history")
 
 urlpatterns = [] + router.urls
