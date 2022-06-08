@@ -16,12 +16,31 @@ Including another URLconf
 from rest_framework_swagger.views import get_swagger_view
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
+from users.views import (
+    CustomerModelViewSet,
+    StoreModelViewSet,
+)
 
 schema_view = get_swagger_view(title='Panda Mall API')
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
-    path('', schema_view),
-    path('api/', include("api.urls"))
-]
+router = DefaultRouter()
+router.register("Customer", CustomerModelViewSet, basename="customer")
+router.register("store", StoreModelViewSet, basename="store")
+
+urlpatterns = (
+        [
+            path('admin/', admin.site.urls),
+            path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+            path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+            path('api/', include("api.urls")),
+            path('', schema_view),
+        ]
+        + router.urls
+)
