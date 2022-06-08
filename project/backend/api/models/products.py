@@ -11,7 +11,7 @@ class Product(BaseTimeStampedModel):
     DRESS_PANTS = "Dress Pants"
 
     CATEGORY_CHOICES = (
-    (FORMAL_SHIRTS, "Formal Shirts"), (CASUAL_SHIRTS, "Casual Shirts"), (DRESS_PANTS, "Dress Pants"))
+        (FORMAL_SHIRTS, "Formal Shirts"), (CASUAL_SHIRTS, "Casual Shirts"), (DRESS_PANTS, "Dress Pants"))
     STATUS_CHOICES = ((APPROVED, "Approved"), (SUSPENDED, "Suspended"))
 
     sku = models.CharField(max_length=100)
@@ -39,6 +39,7 @@ class ProductCharacteristics(BaseTimeStampedModel):
 
     def __str__(self):
         return "{color} and {size}".format(color=self.color, size=self.size)
+
 
 class Favourite(BaseTimeStampedModel):
     customer = models.ForeignKey(Customer, related_name='favourite_customers', on_delete=models.CASCADE)
