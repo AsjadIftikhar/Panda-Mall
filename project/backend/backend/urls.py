@@ -28,6 +28,7 @@ from users.views import (
     StoreModelViewSet,
 )
 
+from .views import TokenObtainUserView
 schema_view = get_swagger_view(title='Panda Mall API')
 
 router = DefaultRouter()
@@ -37,7 +38,7 @@ router.register("store", StoreModelViewSet, basename="store")
 urlpatterns = (
         [
             path('admin/', admin.site.urls),
-            path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+            path('api/token/', TokenObtainUserView.as_view(), name='token_obtain_pair'),
             path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
             path('api/', include("api.urls")),
             path('', schema_view),
