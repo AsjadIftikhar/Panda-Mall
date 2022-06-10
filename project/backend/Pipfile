@@ -7,11 +7,11 @@ name = "pypi"
 django = "*"
 djangorestframework = "*"
 drf-nested-routers = "*"
-django-rest-swagger = "*"
 markdown = "*"
 django-filter = "*"
-djangorestframework-simplejwt = "*"
 django-cors-headers = "*"
+djoser = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 
