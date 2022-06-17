@@ -1,53 +1,58 @@
-from django.contrib.auth import get_user_model
-from rest_framework import serializers
+from rest_framework.serializers import ModelSerializer
+from djoser.serializers import UserSerializer as BaseUserSerializer, UserCreateSerializer as BaseUserCreateSerializer
 
 from users.models import (
+    UserRoleEnum,
     Customer,
     Store,
 )
 
-UserModel = get_user_model()
 
+class CustomerSerializer(ModelSerializer):
+    """Serializer To Register a Customer Type User"""
 
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserModel
-        exclude = ["password"]
-
-
-class CustomerSerializer(UserSerializer):
     class Meta:
         model = Customer
-        exclude = ["password"]
+        fields = ["id", "user_id", "address", "cell_number", "role", "city", "gender"]
 
-
-class StoreSerializer(UserSerializer):
-    class Meta:
-        model = Store
-        exclude = ["password"]
-
-
-class CustomerRegisterSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Customer
-        fields = ["id", "email", "username", "first_name", "last_name", "password", "address", "cell_number", "city",
-                  "gender", "role"]
         extra_kwargs = {
-            "password": {"write_only": True},
+            "role": {"read_only": True},
+            "user_id": {"read_only": True}
+
         }
 
+    def create(self, validated_data):
+        validated_data["user_id"] = self.context['request'].user.id
+        validated_data["role"] = UserRoleEnum.CUSTOMER.value
 
-class StoreRegisterSerializer(serializers.ModelSerializer):
+        return super(CustomerSerializer, self).create(validated_data)
+
+
+class StoreSerializer(ModelSerializer):
+    """Serializer To Register a Store Type User"""
+
     class Meta:
         model = Store
-        fields = ["id", "email", "username", "password", "address", "cell_number", "city", "ntn",
-                  "bank_account_number", "description", "role"]
-        extra_kwargs = {
-            "password": {"write_only": True},
-        }
+        fields = ["id", "address", "user_id", "cell_number", "city", "ntn", "bank_account_number", "description"]
+
+    extra_kwargs = {
+        "role": {"read_only": True},
+        "user_id": {"read_only": True}
+
+    }
+
+    def create(self, validated_data):
+        validated_data["user_id"] = self.context['request'].user.id
+        validated_data["role"] = UserRoleEnum.STORE.value
+
+        return super(StoreSerializer, self).create(validated_data)
 
 
-class CustomerMeSerializer(UserSerializer):
-    class Meta:
-        model = Customer
-        exclude = ["password"]
+class UserSerializer(BaseUserSerializer):
+    class Meta(BaseUserSerializer.Meta):
+        fields = ['id', 'username', 'email', 'first_name', 'last_name']
+
+
+class UserCreateSerializer(BaseUserCreateSerializer):
+    class Meta(BaseUserCreateSerializer.Meta):
+        fields = ['id', 'first_name', 'last_name', 'username', 'email', 'password']

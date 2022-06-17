@@ -9,7 +9,7 @@ from users.views import (
 
 router = DefaultRouter()
 router.register("Customer", CustomerModelViewSet, basename="customer")
-router.register("store", StoreModelViewSet, basename="store")
+router.register("Store", StoreModelViewSet, basename="store")
 
 urlpatterns = (
         [

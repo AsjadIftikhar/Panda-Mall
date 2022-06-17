@@ -7,7 +7,6 @@ from django.contrib.auth.models import AbstractUser
 class UserRoleEnum(Enum):
     """Enum representing User Types"""
 
-    ADMIN = "ADMIN"
     STORE = "STORE"
     CUSTOMER = "CUSTOMER"
 
