@@ -1,81 +1,52 @@
-from django.contrib.auth import get_user_model
-from rest_framework import viewsets, exceptions
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.mixins import CreateModelMixin, DestroyModelMixin, RetrieveModelMixin, UpdateModelMixin
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
 from users.models import (
-    UserRoleEnum,
     Customer,
     Store,
 )
 from users.serializers import (
-    UserSerializer,
     CustomerSerializer,
-    CustomerRegisterSerializer,
     StoreSerializer,
-    StoreRegisterSerializer,
-    CustomerMeSerializer
 )
 
-UserModel = get_user_model()
 
-
-class UserModelViewSet(viewsets.ReadOnlyModelViewSet):
-    # permission_classes = [IsAuthenticated]
-
-    queryset = UserModel.objects.all()
-    serializer_class = UserSerializer
-
-
-class CustomerModelViewSet(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated]
+class CustomerModelViewSet(CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, GenericViewSet):
+    """View Set for Customer Profiles"""
     queryset = Customer.objects.all()
+    serializer_class = CustomerSerializer
+    permission_classes = [IsAuthenticated]
 
-    method_serializer_classes = {
-        ('GET',): CustomerSerializer,
-        ('POST', 'PUT', 'PATCH'): CustomerRegisterSerializer,
-    }
-
-    def get_serializer_class(self):
-        assert self.method_serializer_classes is not None, (
-                'Expected view %s should contain method_serializer_classes '
-                'to get right serializer class.' %
-                (self.__class__.__name__,)
-        )
-        for methods, serializer_cls in self.method_serializer_classes.items():
-            if self.request.method in methods:
-                return serializer_cls
-
-        raise exceptions.MethodNotAllowed(self.request.method)
-
-    def perform_create(self, serializer):
-        instance = serializer.save()
-        instance.set_password(instance.password)
-        instance.save()
+    @action(detail=False, methods=['GET', 'PUT'], permission_classes=[IsAuthenticated])
+    def me(self, request):
+        (customer, created) = Customer.objects.get_or_create(
+            user_id=request.user.id)
+        if request.method == 'GET':
+            serializer = CustomerSerializer(customer)
+            return Response(serializer.data)
+        elif request.method == 'PUT':
+            serializer = CustomerSerializer(customer, data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
 
 
-class StoreModelViewSet(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated]
+class StoreModelViewSet(CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, GenericViewSet):
+    """View Set for Store profile"""
     queryset = Store.objects.all()
+    serializer_class = StoreSerializer
+    permission_classes = [IsAuthenticated]
 
-    method_serializer_classes = {
-        ('GET',): StoreSerializer,
-        ('POST', 'PUT', 'PATCH'): StoreRegisterSerializer,
-    }
-
-    def get_serializer_class(self):
-        assert self.method_serializer_classes is not None, (
-                'Expected view %s should contain method_serializer_classes '
-                'to get right serializer class.' %
-                (self.__class__.__name__,)
-        )
-        for methods, serializer_cls in self.method_serializer_classes.items():
-            if self.request.method in methods:
-                return serializer_cls
-
-        raise exceptions.MethodNotAllowed(self.request.method)
-
-    def perform_create(self, serializer):
-        instance = serializer.save()
-        instance.set_password(instance.password)
-        instance.save()
+    @action(detail=False, methods=['GET', 'PUT'], permission_classes=[IsAuthenticated])
+    def me(self, request):
+        (store, created) = Store.objects.get_or_create(
+            user_id=request.user.id)
+        if request.method == 'GET':
+            serializer = StoreSerializer(store)
+            return Response(serializer.data)
+        elif request.method == 'PUT':
+            serializer = StoreSerializer(store, data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
