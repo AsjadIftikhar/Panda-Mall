@@ -1,12 +1,15 @@
 import './App.css';
 import Navbar from "./components/navbar";
 import React, {Component} from 'react';
-import {Route, Switch} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import Sidebar from "./components/sidebar";
 import Products from "./components/products";
 import Footer from "./components/footer";
 import Breadcrumb from "./components/breadcrumb";
 import Dashboard from "./components/dashboard";
+import Login from "./components/login";
+import Register from "./components/register";
+
 
 class App extends Component {
     state = {
@@ -1134,52 +1137,83 @@ class App extends Component {
     render() {
         return (
             <div className="relative min-h-screen md:flex">
-                <Sidebar products_count={this.state.products.length}/>
-                <div className="flex-1 px-6">
-                    <Navbar/>
-                    {/*<Breadcrumb/>*/}
-                    <Switch>
-                        <Route path="/products"
-                               render={(props) =>
-                                   <>
+
+                <Routes>
+                    <Route path="/products"
+                           element={
+                               <>
+                                   <Sidebar products_count={this.state.products.length}/>
+                                   <div className="flex-1 px-6">
+                                       <Navbar/>
                                        <Breadcrumb title="All Products"
                                                    dir="Products"/>
                                        <Products onDelete={this.handleDelete}
                                                  onAdd={this.handleAddProduct}
                                                  onEdit={this.handleEditProduct}
-                                                 products={this.state.products} {...props}/>
-                                   </>
-                               }/>
-                        <Route path="/dashboard"
-                               render={(props) =>
-                                   <>
+                                                 products={this.state.products}/>
+                                       <Footer/>
+                                   </div>
+                               </>
+                           }/>
+                    <Route path="/dashboard"
+                           element={
+                               <>
+                                   <Sidebar products_count={this.state.products.length}/>
+                                   <div className="flex-1 px-6">
+                                       <Navbar/>
                                        <Breadcrumb title="Dashboard"
                                                    dir="Dashboard"/>
                                        <Dashboard/>
-                                   </>
-                               }/>
-                        <Route path="/users"
-                               render={(props) =>
-                                   <>
+                                       <Footer/>
+                                   </div>
+                               </>
+                           }/>
+                    <Route path="/users"
+                           element={
+                               <>
+                                   <Sidebar products_count={this.state.products.length}/>
+                                   <div className="flex-1 px-6">
+                                       <Navbar/>
                                        <Breadcrumb title="All Users"
                                                    dir="Users"/>
                                        <Dashboard/>
-                                   </>
-                               }/>
-                        <Route exact path="/"
-                               render={(props) =>
-                                   <>
+                                       <Footer/>
+                                   </div>
+                               </>
+                           }/>
+                    <Route path="/login"
+                           element={
+                               <>
+                                   <div className="flex-1 px-6">
+                                       <Login/>
+                                   </div>
+                               </>
+                           }/>
+                    <Route path="/register"
+                           element={
+                               <>
+                                   <div className="flex-1 px-6">
+                                       <Register/>
+                                   </div>
+                               </>
+                           }/>
+                    <Route exact path="/"
+                           element={
+                               <>
+                                   <Sidebar products_count={this.state.products.length}/>
+                                   <div className="flex-1 px-6">
+                                       <Navbar/>
                                        <Breadcrumb title="All Products"
                                                    dir="Products"/>
                                        <Products onDelete={this.handleDelete}
                                                  onAdd={this.handleAddProduct}
                                                  onEdit={this.handleEditProduct}
-                                                 products={this.state.products} {...props}/>
-                                   </>
-                               }/>
-                    </Switch>
-                    <Footer/>
-                </div>
+                                                 products={this.state.products}/>
+                                       <Footer/>
+                                   </div>
+                               </>
+                           }/>
+                </Routes>
             </div>
         );
     }
