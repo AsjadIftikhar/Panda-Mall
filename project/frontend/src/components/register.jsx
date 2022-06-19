@@ -40,14 +40,9 @@ class Register extends Component {
             try {
                 const response = await register(this.state.new_user)
                 if (response.status === 201) {
-                    const response = await login(this.state.new_user)
-                    if (response.status === 200) {
-                        console.log(response.data.access)
-                        localStorage.setItem("access", response.data.access)
-                        localStorage.setItem("refresh", response.data.refresh)
+                    await login(this.state.new_user)
+                    this.props.navigate('/profile')
 
-                        this.props.navigate('/')
-                    }
                 }
 
 

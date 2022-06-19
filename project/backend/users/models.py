@@ -46,6 +46,8 @@ class Customer(models.Model):
 class Store(models.Model):
     """Store Model with OneToOne Association with User"""
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    brand_name = models.CharField(max_length=255, null=True, blank=True)
+    company_website = models.URLField(null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
     cell_number = models.CharField(max_length=20, null=True, blank=True)
     city = models.CharField(max_length=50, null=True, blank=True)

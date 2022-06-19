@@ -33,7 +33,8 @@ class StoreSerializer(ModelSerializer):
 
     class Meta:
         model = Store
-        fields = ["id", "address", "user_id", "cell_number", "city", "ntn", "bank_account_number", "description"]
+        fields = ["id", "brand_name", "company_website", "address", "user_id", "cell_number", "city", "ntn",
+                  "bank_account_number", "description"]
 
     extra_kwargs = {
         "role": {"read_only": True},

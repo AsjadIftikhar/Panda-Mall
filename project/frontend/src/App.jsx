@@ -9,6 +9,7 @@ import Breadcrumb from "./components/breadcrumb";
 import Dashboard from "./components/dashboard";
 import Login from "./components/login";
 import Register from "./components/register";
+import Profile_Component from "./components/profile";
 
 
 class App extends Component {
@@ -1194,6 +1195,19 @@ class App extends Component {
                                <>
                                    <div className="flex-1 px-6">
                                        <Register/>
+                                   </div>
+                               </>
+                           }/>
+                    <Route path="/profile"
+                           element={
+                               <>
+                                   <Sidebar products_count={this.state.products.length}/>
+                                   <div className="flex-1 px-6">
+                                       <Navbar/>
+                                       <Breadcrumb title="My Store"
+                                                   dir="Profile Setup"/>
+                                       <Profile_Component />
+                                       <Footer/>
                                    </div>
                                </>
                            }/>

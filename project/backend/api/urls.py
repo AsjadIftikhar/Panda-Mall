@@ -1,4 +1,4 @@
-from rest_framework.routers import SimpleRouter
+from rest_framework.routers import DefaultRouter
 
 from api.views.products import (
     ProductViewSet,
@@ -8,7 +8,7 @@ from api.views.products import (
 
 from api.views.product_history import PurchaseHistoryViewSet
 
-router = SimpleRouter()
+router = DefaultRouter()
 router.register("product", ProductViewSet, basename="product")
 router.register("productCharacteristic", ProductCharacteristicsViewSet, basename="product-characteristic")
 router.register("favourite", FavouriteViewSet, basename="favourite")

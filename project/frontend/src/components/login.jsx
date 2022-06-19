@@ -27,17 +27,10 @@ class Login extends Component {
         e.preventDefault()
 
         try {
-            const response = await login(this.state.new_user)
-            if (response.status === 200) {
-                console.log(response.data.access)
-                localStorage.setItem("access", response.data.access)
-                localStorage.setItem("refresh", response.data.refresh)
-
-                // this.props.navigate('/')
-                window.location = "/"
-            }
-
-
+            await login(this.state.new_user)
+            // todo both Ways:
+            // this.props.navigate('/')
+            window.location = "/"
         } catch (ex) {
             if (ex.response && (ex.response.status === 400 || ex.response.status === 401)) {
                 const errors = this.state.errors
