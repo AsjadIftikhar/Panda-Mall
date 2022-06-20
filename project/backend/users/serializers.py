@@ -3,6 +3,7 @@ from djoser.serializers import UserSerializer as BaseUserSerializer, UserCreateS
 
 from users.models import (
     UserRoleEnum,
+    User,
     Customer,
     Store,
 )
@@ -25,6 +26,10 @@ class CustomerSerializer(ModelSerializer):
         validated_data["user_id"] = self.context['request'].user.id
         validated_data["role"] = UserRoleEnum.CUSTOMER.value
 
+        logged_in_user = User.objects.get(id=self.context['request'].user.id)
+        logged_in_user.role = UserRoleEnum.CUSTOMER.value
+        logged_in_user.save()
+
         return super(CustomerSerializer, self).create(validated_data)
 
 
@@ -45,6 +50,10 @@ class StoreSerializer(ModelSerializer):
     def create(self, validated_data):
         validated_data["user_id"] = self.context['request'].user.id
         validated_data["role"] = UserRoleEnum.STORE.value
+
+        logged_in_user = User.objects.get(id=self.context['request'].user.id)
+        logged_in_user.role = UserRoleEnum.STORE.value
+        logged_in_user.save()
 
         return super(StoreSerializer, self).create(validated_data)
 

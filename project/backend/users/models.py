@@ -14,6 +14,8 @@ class UserRoleEnum(Enum):
 class User(AbstractUser):
     """BASE User Model"""
     email = models.EmailField(unique=True)
+    role = models.CharField(max_length=20, choices=[(item.name, item.value) for item in UserRoleEnum],
+                            null=True, blank=True)
 
 
 class Customer(models.Model):
