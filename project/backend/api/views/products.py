@@ -2,18 +2,16 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from api.models.products import Product, ProductCharacteristics, Favourite
 from api.serializers.products import ProductCharacteristicsSerializer, ProductSerializer, FavouriteSerializer
-from users.models import UserRoleEnum
 
 
 class ProductViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
-    queryset = Product.objects.select_related('store').all()
     serializer_class = ProductSerializer
 
     def get_queryset(self):
-        if self.request.user.role == UserRoleEnum.STORE.value:
+        try:
             return Product.objects.select_related("store").filter(store=self.request.user.store)
-        else:
+        except:
             return Product.objects.select_related('store').all()
 
 
