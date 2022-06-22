@@ -102,7 +102,8 @@ class Products extends Component {
                               handleFormChange={this.handleFormChange}
                               product={this.state.product}/>
                 }
-                <div className={`${(this.state.add_modal_on ? 'opacity-20 blur-md' : '')} mt-4 border border-slate-100`}>
+                <div
+                    className={`${(this.state.add_modal_on ? 'opacity-20 blur-md' : '')} mt-4 border border-slate-100`}>
                     <div className="flex flex-col">
                         <div className="overflow-x-auto shadow-md sm:rounded-lg">
                             <div className="inline-block min-w-full align-middle dark:bg-gray-800">
@@ -284,10 +285,14 @@ class Products extends Component {
                                             </th>
                                             <th scope="col"
                                                 className="py-3 px-6 text-xs font-medium tracking-wider text-left text-slate-50 uppercase dark:text-gray-400">
-                                                Color
+                                                Status
+                                            </th>
+                                            <th scope="col"
+                                                className="py-3 px-6 text-xs font-medium tracking-wider text-left text-slate-50 uppercase dark:text-gray-400">
+                                                Rating
                                             </th>
                                             <th scope="col" className="p-4">
-                                                <span className="sr-only">Edit</span>
+                                                <span className="sr-only">Edit / Delete</span>
                                             </th>
                                         </tr>
                                         </thead>
@@ -298,27 +303,41 @@ class Products extends Component {
                                                 <td className="p-4 w-4">
                                                     <div className="flex items-center">
                                                         <input id="checkbox-search-1" type="checkbox"
-                                                               className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
+                                                               className="w-4 h-4 text-blue-600 bg-gray-100 rounded
+                                                               border-gray-300 focus:ring-blue-500"/>
                                                         <label htmlFor="checkbox-search-1"
                                                                className="sr-only">checkbox</label>
                                                     </div>
                                                 </td>
-                                                <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                <td className="py-4 px-6 text-sm font-medium text-gray-900
+                                                whitespace-nowrap dark:text-white">
                                                     <img className="w-10 h-10 rounded-full"
                                                          src={p.image_url}/>
                                                 </td>
-                                                <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                                <td className="py-4 px-6 text-sm font-medium text-gray-900
+                                                whitespace-nowrap dark:text-white">
                                                     {p.sku}
                                                 </td>
-                                                <td className="py-4 px-6 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white">
+                                                <td className="py-4 px-6 text-sm font-medium text-gray-500
+                                                whitespace-nowrap dark:text-white">
                                                     {p.title}
                                                 </td>
-                                                <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">Rs.{p.price}/-</td>
-                                                <td className="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">{p.color}</td>
+                                                <td className="py-4 px-6 text-sm font-medium text-gray-900
+                                                whitespace-nowrap">Rs.{p.price}/-</td>
+
+                                                <td className={`py-4 px-6 text-sm font-medium 
+                                                ${(p.status === 'Suspended' ? 'text-red-500' : 'text-green-500')} 
+                                                whitespace-nowrap`}>{p.status}</td>
+                                                <td className="py-4 px-6 text-sm font-medium text-gray-900
+                                                whitespace-nowrap dark:text-white">{p.rating}</td>
+
                                                 <td className="p-4 whitespace-nowrap space-x-4">
 
                                                     <button type="button" data-modal-toggle="products-edit-modal"
-                                                            className="text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 shadow shadow-teal-500/50 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2 text-center"
+                                                            className="text-white bg-gradient-to-r
+                                                            from-teal-400 via-teal-500 to-teal-600 shadow shadow-teal-500/50
+                                                            hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium
+                                                            rounded-lg text-sm inline-flex items-center px-3 py-2 text-center"
                                                             onClick={() => {
                                                                 this.setState({product: p})
                                                             }

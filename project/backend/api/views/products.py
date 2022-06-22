@@ -16,11 +16,9 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 
 class ProductCharacteristicsViewSet(viewsets.ModelViewSet):
+    queryset = ProductCharacteristics.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = ProductCharacteristicsSerializer
-
-    def get_queryset(self):
-        return ProductCharacteristics.objects.filter(products=self.kwargs["product_id"])
 
 
 class FavouriteViewSet(viewsets.ModelViewSet):

@@ -14,10 +14,25 @@ const AddModal = ({setModalOn, handleAdd, handleFormChange, product}) => {
     return (
         <div className="fixed z-50 inset-0 flex justify-center items-center">
             <div className="w-3/5">
-                <div className="px-8 bg-white border border-teal-500 rounded-lg shadow-lg">
-                    <h3 className="text-xl font-semibold">
-                        Add a new product
-                    </h3>
+                <div className="px-8 py-4 bg-white border border-teal-500 rounded-lg shadow-lg">
+                    <div className="flex">
+                        <h3 className="text-xl font-semibold">
+                            Add a new product
+                        </h3>
+                        <button type="button"
+                                onClick={handleCancelClick}
+                                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900
+                                 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600
+                                 dark:hover:text-white"
+                                data-modal-toggle="defaultModal">
+                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path fillRule="evenodd"
+                                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                      clipRule="evenodd"/>
+                            </svg>
+                        </button>
+                    </div>
 
                     <div className="p-4 space-y-4">
                         <form onSubmit={handleOKClick}>
@@ -91,15 +106,15 @@ const AddModal = ({setModalOn, handleAdd, handleFormChange, product}) => {
                                            required=""/>
                                 </div>
                                 <div className="col-span-6 sm:col-span-3">
-                                    <label className="text-sm font-medium text-gray-900 block mb-2">Category</label>
+                                    <label className="text-sm font-medium text-gray-900 block mb-2">Cuff Style</label>
                                     <input type="text"
-                                           name="category"
-                                           value={product.category}
+                                           name="cuff_style"
+                                           value={product.cuff_style}
                                            onChange={handleFormChange}
                                            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900
                                            sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block
                                             w-full p-2.5"
-                                           placeholder="Shirt"
+                                           placeholder="Italian"
                                            required=""/>
                                 </div>
                                 <div className="col-span-6 sm:col-span-3">

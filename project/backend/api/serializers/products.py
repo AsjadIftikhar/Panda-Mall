@@ -12,7 +12,6 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ["id", "sku", "title", "fabric", "fit", "collars_type", "sleeves", "cuff_style", "product_url",
                   "image_url", "category", "status", "price", "discount", "quantity", "rating", "store"]
         extra_kwargs = {
-            "category": {"read_only": True},
             "status": {"read_only": True},
             "rating": {"read_only": True}
         }
@@ -25,7 +24,7 @@ class ProductSerializer(serializers.ModelSerializer):
 class ProductCharacteristicsSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductCharacteristics
-        fields = "__all__"
+        fields = ["id", "color", "size", "product"]
 
 
 class FavouriteSerializer(serializers.ModelSerializer):

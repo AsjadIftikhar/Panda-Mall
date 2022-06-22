@@ -9,7 +9,7 @@ import Dashboard from "./components/dashboard";
 import Login from "./components/login";
 import Register from "./components/register";
 import ProfileComponent from "./components/profile";
-import {delete_product, get_store_products} from "./services/productServices";
+import {create_product, delete_product, get_store_products} from "./services/productServices";
 
 
 class App extends Component {
@@ -26,14 +26,16 @@ class App extends Component {
 
 
     handleDelete = async (id) => {
-
         await delete_product(id)
+
         const products = this.state.products.filter(p => p.id !== id)
         this.setState({products})
 
     };
 
-    handleAddProduct = (product) => {
+    handleAddProduct = async (product) => {
+        await create_product(product)
+
         const products = this.state.products;
         products.push(product)
         this.setState({products})
