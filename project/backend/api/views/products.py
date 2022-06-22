@@ -18,7 +18,7 @@ class ProductViewSet(viewsets.ModelViewSet):
 
 
 class ProductCharacteristicsViewSet(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     serializer_class = ProductCharacteristicsSerializer
 
     def get_queryset(self):
@@ -26,7 +26,7 @@ class ProductCharacteristicsViewSet(viewsets.ModelViewSet):
 
 
 class FavouriteViewSet(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     serializer_class = FavouriteSerializer
 
     def get_queryset(self):
