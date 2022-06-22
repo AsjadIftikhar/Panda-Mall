@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 
 import {update} from "../services/userServices";
 
-function Profile_Component(props) {
+const ProfileComponent = () => {
 
     // Profile Fields
     const [phone, setPhone] = useState('');
@@ -36,6 +36,7 @@ function Profile_Component(props) {
 
     return (
         <div className="bg-LightGrey border border-gray-50 my-8">
+            <span>{errMsg}</span>
             <div className="flex flex-row bg-white drop-shadow-lg rounded-lg">
                 <div className="basis-1/4 px-8 border-r-2 border-gray-300">
                     <h3 className="text-xl font-semibold py-6">Preferences</h3>
@@ -208,9 +209,9 @@ function Profile_Component(props) {
 
                         <div className="grid xl:grid-cols-2 xl:gap-16">
                             <div className="relative z-0 mt-6 mb-6 w-full group">
-                                <a href="#" className="text-teal-800 text-xl text-center w-full hover:underline">
+                                <button href="#" className="text-teal-800 text-xl text-center w-full hover:underline">
                                     Deactivate Store
-                                </a>
+                                </button>
                             </div>
                             <div className="mb-6 w-full">
                                 <button type="submit"
@@ -227,4 +228,4 @@ function Profile_Component(props) {
     );
 }
 
-export default Profile_Component;
+export default ProfileComponent;

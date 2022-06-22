@@ -9,8 +9,8 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ["sku", "title", "description", "price", "product_url", "image_url", "category", "status", "discount",
-                  "quantity", "store"]
+        fields = ["id", "sku", "title", "description", "price", "product_url", "image_url", "category", "status",
+                  "discount", "quantity", "store"]
 
     def create(self, validated_data):
         validated_data['store'] = self.context['request'].user.store
