@@ -20,7 +20,7 @@ class ProductCharacteristicsViewSet(viewsets.ModelViewSet):
     serializer_class = ProductCharacteristicsSerializer
 
     def get_queryset(self):
-        return ProductCharacteristics.objects.filter(products=self.kwargs["product_id"])
+        return ProductCharacteristics.objects.all()
 
 
 class FavouriteViewSet(viewsets.ModelViewSet):
@@ -28,4 +28,4 @@ class FavouriteViewSet(viewsets.ModelViewSet):
     serializer_class = FavouriteSerializer
 
     def get_queryset(self):
-        return Favourite.objects.filter(customer=self.kwargs["customer_id"])
+        return Favourite.objects.all()

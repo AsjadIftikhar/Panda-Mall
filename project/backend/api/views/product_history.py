@@ -6,8 +6,8 @@ from django.core.exceptions import ObjectDoesNotExist
 
 
 class PurchaseHistoryViewSet(viewsets.ModelViewSet):
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     serializer_class = PurchaseHistorySerializer
 
     def get_queryset(self):
-        return PurchaseHistory.objects.filter(customer=self.kwargs["customer_id"])
+        return PurchaseHistory.objects.all()
