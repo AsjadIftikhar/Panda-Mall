@@ -10,7 +10,7 @@ class Navbar extends Component {
                 <div className="container flex flex-wrap justify-between items-center mx-auto">
                     <div className="flex items-center md:order-2">
                         <button type="button"
-                                className="flex mr-3 text-sm bg-gray-800 rounded-2xl md:mr-0 focus:ring-4
+                                className="flex mr-3 text-sm bg-transparent rounded-2xl
                                 focus:ring-gray-300"
                                 id="user-menu-button" aria-expanded="false" data-dropdown-toggle="dropdown">
                             <span className="sr-only">Open user menu</span>
@@ -24,26 +24,27 @@ class Navbar extends Component {
                             id="dropdown">
                             <div className="py-3 px-4">
                                 <span
-                                    className="block text-sm text-gray-900 dark:text-white">{this.props.store.brand_name}</span>
+                                    className="block text-sm text-teal-700 ">{this.props.store.brand_name}</span>
                                 <a href={this.props.store.company_website}
-                                    className="block text-sm font-medium text-gray-500 truncate hover:text-gray-400">
+                                    className="block font-medium text-gray-500 truncate hover:text-teal-700">
                                     {this.props.store.company_website}
                                 </a>
                             </div>
                             <ul className="py-1" aria-labelledby="dropdown">
                                 <li>
                                     <NavLink to="/dashboard"
-                                             className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100">
+                                             className="block py-2 px-4 text-sm text-gray-700 hover:bg-teal-100">
                                         Dashboard</NavLink>
                                 </li>
-                                <li>
-                                    <button onClick={() => {
+                                <li className="hover:bg-teal-100 "
+                                    onClick={() => {
                                         logout();
                                         window.location = "/login"
-                                    }}
-                                            className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 ">Sign
+                                    }}>
+                                    <div
+                                            className="block py-2 px-4 text-sm text-gray-700 hover:bg-teal-100 ">Sign
                                         out
-                                    </button>
+                                    </div >
                                 </li>
                             </ul>
                         </div>
