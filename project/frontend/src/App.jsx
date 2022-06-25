@@ -9,19 +9,21 @@ import Dashboard from "./components/dashboard";
 import Login from "./components/login";
 import Register from "./components/register";
 import ProfileComponent from "./components/profile";
-import {create_product, delete_product, get_store_products} from "./services/productServices";
+import {create_product, delete_product, get_products, update_product} from "./services/productServices";
 
 
 class App extends Component {
     state = {
-        products: []
+        products: [],
+        isLoading: true,
     };
 
 
     async componentDidMount() {
-        const {data: products} = await get_store_products()
-        console.log(products)
+        let {data: products} = await get_products()
         this.setState({products})
+        this.setState({isLoading: false})
+
     }
 
 
@@ -34,15 +36,16 @@ class App extends Component {
     };
 
     handleAddProduct = async (product) => {
-        await create_product(product)
+        const response = await create_product(product)
 
         const products = this.state.products;
-        products.push(product)
+        products.push(response.data)
         this.setState({products})
     };
 
-    handleEditProduct = (product) => {
-        const products = this.state.products;
+    handleEditProduct = async (product) => {
+        let products = this.state.products;
+        await update_product(product)
 
         // Find index of specific object using findIndex method.
         const product_index = products.findIndex((p => p.sku === product.sku));
@@ -70,7 +73,8 @@ class App extends Component {
                                        <Products onDelete={this.handleDelete}
                                                  onAdd={this.handleAddProduct}
                                                  onEdit={this.handleEditProduct}
-                                                 products={this.state.products}/>
+                                                 products={this.state.products}
+                                                 isLoading={this.state.isLoading}/>
                                        <Footer/>
                                    </div>
                                </>
@@ -141,7 +145,9 @@ class App extends Component {
                                        <Products onDelete={this.handleDelete}
                                                  onAdd={this.handleAddProduct}
                                                  onEdit={this.handleEditProduct}
-                                                 products={this.state.products}/>
+                                                 products={this.state.products}
+                                                 isLoading={this.state.isLoading}
+                                       />
                                        <Footer/>
                                    </div>
                                </>
