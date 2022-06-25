@@ -1,28 +1,35 @@
-import Navbar from "./components/navbar";
 import React, {Component} from 'react';
 import {Route, Routes} from "react-router-dom";
+
+import Navbar from "./components/navbar";
 import Sidebar from "./components/sidebar";
-import Products from "./components/products";
 import Footer from "./components/footer";
 import Breadcrumb from "./components/breadcrumb";
+
+import Products from "./components/products";
 import Dashboard from "./components/dashboard";
 import Login from "./components/login";
 import Register from "./components/register";
 import ProfileComponent from "./components/profile";
 import {create_product, delete_product, get_products, update_product} from "./services/productServices";
+import ProtectedRoute from "./components/commons/ProtectedRoute";
+import {get_me} from "./services/userServices";
 
 
 class App extends Component {
     state = {
         products: [],
+        store: [],
         isLoading: true,
     };
 
 
     async componentDidMount() {
         let {data: products} = await get_products()
-        this.setState({products})
-        this.setState({isLoading: false})
+        let {data: store} = await get_me()
+
+        console.log(store)
+        this.setState({products, store, isLoading: false})
 
     }
 
@@ -62,49 +69,73 @@ class App extends Component {
             <div className="relative min-h-screen md:flex">
 
                 <Routes>
-                    <Route path="/products"
-                           element={
-                               <>
-                                   <Sidebar products_count={this.state.products.length}/>
-                                   <div className="flex-1 px-6">
-                                       <Navbar/>
-                                       <Breadcrumb title="All Products"
-                                                   dir="Products"/>
-                                       <Products onDelete={this.handleDelete}
-                                                 onAdd={this.handleAddProduct}
-                                                 onEdit={this.handleEditProduct}
-                                                 products={this.state.products}
-                                                 isLoading={this.state.isLoading}/>
-                                       <Footer/>
-                                   </div>
-                               </>
-                           }/>
-                    <Route path="/dashboard"
-                           element={
-                               <>
-                                   <Sidebar products_count={this.state.products.length}/>
-                                   <div className="flex-1 px-6">
-                                       <Navbar/>
-                                       <Breadcrumb title="Dashboard"
-                                                   dir="Dashboard"/>
-                                       <Dashboard/>
-                                       <Footer/>
-                                   </div>
-                               </>
-                           }/>
-                    <Route path="/users"
-                           element={
-                               <>
-                                   <Sidebar products_count={this.state.products.length}/>
-                                   <div className="flex-1 px-6">
-                                       <Navbar/>
-                                       <Breadcrumb title="All Users"
-                                                   dir="Users"/>
-                                       <Dashboard/>
-                                       <Footer/>
-                                   </div>
-                               </>
-                           }/>
+                    <Route exact path='/' element={<ProtectedRoute/>}>
+
+                        <Route path="/products"
+                               element={
+                                   <>
+                                       <Sidebar products_count={this.state.products.length}/>
+                                       <div className="flex-1 px-6">
+                                           <Navbar store={this.state.store}/>
+                                           <Breadcrumb title={`${this.state.store['brand_name']} - Products`}
+                                                       dir="Products"/>
+                                           <Products onDelete={this.handleDelete}
+                                                     onAdd={this.handleAddProduct}
+                                                     onEdit={this.handleEditProduct}
+                                                     products={this.state.products}
+                                                     isLoading={this.state.isLoading}/>
+                                           <Footer/>
+                                       </div>
+                                   </>
+                               }/>
+                        <Route path="/dashboard"
+                               element={
+                                   <>
+                                       <Sidebar products_count={this.state.products.length}/>
+                                       <div className="flex-1 px-6">
+                                           <Navbar store={this.state.store}/>
+                                           <Breadcrumb title="Dashboard"
+                                                       dir="Dashboard"/>
+                                           <Dashboard/>
+                                           <Footer/>
+                                       </div>
+                                   </>
+                               }/>
+                        <Route path="/me"
+                               element={
+                                   <>
+                                       <Sidebar products_count={this.state.products.length}/>
+                                       <div className="flex-1 px-6">
+                                           <Navbar store={this.state.store}/>
+                                           <Breadcrumb title="My Store"
+                                                       dir="Profile Setup"/>
+                                           <ProfileComponent store={this.state.store}/>
+                                           <Footer/>
+                                       </div>
+                                   </>
+                               }/>
+                        <Route exact path="/"
+                               element={
+                                   <>
+                                       <Sidebar products_count={this.state.products.length}/>
+                                       <div className="flex-1 px-6">
+                                           <Navbar store={this.state.store}/>
+                                           <Breadcrumb title={`${this.state.store['brand_name']} - Home`}
+                                                       dir="Home"/>
+                                           <Products onDelete={this.handleDelete}
+                                                     onAdd={this.handleAddProduct}
+                                                     onEdit={this.handleEditProduct}
+                                                     products={this.state.products}
+                                                     isLoading={this.state.isLoading}
+                                           />
+                                           <Footer/>
+                                       </div>
+                                   </>
+                               }/>
+                    </Route>
+
+                    {/*WithOut Authentication:*/}
+
                     <Route path="/login"
                            element={
                                <>
@@ -121,37 +152,7 @@ class App extends Component {
                                    </div>
                                </>
                            }/>
-                    <Route path="/profile"
-                           element={
-                               <>
-                                   <Sidebar products_count={this.state.products.length}/>
-                                   <div className="flex-1 px-6">
-                                       <Navbar/>
-                                       <Breadcrumb title="My Store"
-                                                   dir="Profile Setup"/>
-                                       <ProfileComponent/>
-                                       <Footer/>
-                                   </div>
-                               </>
-                           }/>
-                    <Route exact path="/"
-                           element={
-                               <>
-                                   <Sidebar products_count={this.state.products.length}/>
-                                   <div className="flex-1 px-6">
-                                       <Navbar/>
-                                       <Breadcrumb title="All Products"
-                                                   dir="Products"/>
-                                       <Products onDelete={this.handleDelete}
-                                                 onAdd={this.handleAddProduct}
-                                                 onEdit={this.handleEditProduct}
-                                                 products={this.state.products}
-                                                 isLoading={this.state.isLoading}
-                                       />
-                                       <Footer/>
-                                   </div>
-                               </>
-                           }/>
+
                 </Routes>
             </div>
         );
