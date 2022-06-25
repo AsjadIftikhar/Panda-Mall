@@ -41,14 +41,16 @@ class Command(BaseCommand):
 
             color_size = product['Color_Size'].split(';')
             for combination in color_size:
-                color = combination.split(',')[0]
-                size = combination.split(',')[1]
-                pc = ProductCharacteristics.objects.create(
-                    color=color,
-                    size=size,
-                    product=p
+                split = combination.split(',')
+                if len(split) > 1:
+                    color = split[0]
+                    size = split[1]
+                    pc = ProductCharacteristics.objects.create(
+                        color=color,
+                        size=size,
+                        product=p
 
-                )
-                pc.save()
+                    )
+                    pc.save()
 
         file.close()

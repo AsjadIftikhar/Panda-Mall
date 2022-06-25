@@ -27,24 +27,46 @@ export async function login(user) {
     }
 }
 
-export function update(profile) {
-    return http.post(PROFILE_UPDATE_URL,
-        {
-            brand_name: profile.brand_name,
-            company_website: profile.website_url,
-            address: profile.address,
-            cell_number: profile.phone,
-            city: profile.city,
-            ntn: profile.ntn,
-            bank_account_number: profile.account,
-            description: profile.description
-        },
-        {
-            headers: {
-                'Authorization': `JWT ${localStorage.getItem("access")}`
+export function update(profile, method, store) {
+    if (method === "POST") {
+        return http.post(PROFILE_UPDATE_URL,
+            {
+                brand_name: profile.brand_name,
+                company_website: profile.website_url,
+                address: profile.address,
+                cell_number: profile.phone,
+                city: profile.city,
+                ntn: profile.ntn,
+                bank_account_number: profile.account,
+                description: profile.description
+            },
+            {
+                headers: {
+                    'Authorization': `JWT ${localStorage.getItem("access")}`
+                }
             }
-        }
-    )
+        )
+    }
+    else {
+        return http.patch(`${PROFILE_UPDATE_URL}${store.id}/`,
+            {
+                brand_name: profile.brand_name,
+                company_website: profile.website_url,
+                address: profile.address,
+                cell_number: profile.phone,
+                city: profile.city,
+                ntn: profile.ntn,
+                bank_account_number: profile.account,
+                description: profile.description
+            },
+            {
+                headers: {
+                    'Authorization': `JWT ${localStorage.getItem("access")}`
+                }
+            }
+        )
+    }
+
 }
 
 export function logout() {
