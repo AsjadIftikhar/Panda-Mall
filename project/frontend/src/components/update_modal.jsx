@@ -1,10 +1,10 @@
 import React from 'react';
 
-const AddModal = ({setModalOn, handleAdd, handleFormChange, product}) => {
+const UpdateModal = ({setModalOn, handleUpdate, handleFormChange, product}) => {
 
     const handleOKClick = (e) => {
         e.preventDefault()
-        handleAdd()
+        handleUpdate()
         setModalOn(false)
     }
     const handleCancelClick = () => {
@@ -17,7 +17,7 @@ const AddModal = ({setModalOn, handleAdd, handleFormChange, product}) => {
                 <div className="px-8 py-4 bg-white border border-teal-500 rounded-lg shadow-lg">
                     <div className="flex">
                         <h3 className="text-xl font-semibold">
-                            Add a new product
+                            Update Product
                         </h3>
                         <button type="button"
                                 onClick={handleCancelClick}
@@ -208,7 +208,7 @@ const AddModal = ({setModalOn, handleAdd, handleFormChange, product}) => {
                                     rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
                                     type="submit"
                                     data-modal-toggle="products-add-modal">
-                                    Add product
+                                    Update product
                                 </button>
                                 <button type="button"
                                         onClick={handleCancelClick}
@@ -229,4 +229,4 @@ const AddModal = ({setModalOn, handleAdd, handleFormChange, product}) => {
     );
 }
 
-export default AddModal;
+export default UpdateModal;

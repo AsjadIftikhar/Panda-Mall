@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {update} from "../services/userServices";
 
-const ProfileComponent = () => {
+const ProfileComponent = ({store}) => {
 
     // Profile Fields
     const [phone, setPhone] = useState('');
@@ -18,7 +18,18 @@ const ProfileComponent = () => {
     const [errMsg, setErrMsg] = useState('');
     // const [success, setSuccess] = useState(false);
 
-
+    useEffect(() => {
+        if (store) {
+            setPhone(store.cell_number)
+            setAddress(store.address);
+            setCity(store.city);
+            setBrandName(store.brand_name);
+            setWebsiteUrl(store.company_website);
+            setNtn(store.ntn);
+            setAccount(store.bank_account_number);
+            setDescription(store.description);
+        }
+    });
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -76,7 +87,7 @@ const ProfileComponent = () => {
 
                         <div className="flex my-4">
                             <div className="flex items-center mr-4">
-                                <input id="inline-radio" type="radio" value="" name="inline-radio-group"
+                                <input id="inline-radio" type="radio" value="" name="inline-radio-group" checked="true"
                                        className="w-4 h-4 text-teal-500 bg-gray-100 border-gray-300 focus:ring-teal-500
                                         focus:ring-2"/>
                                 <label htmlFor="inline-radio"
