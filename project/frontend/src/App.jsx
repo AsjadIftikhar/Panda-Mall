@@ -28,8 +28,8 @@ class App extends Component {
 
 
     async componentDidMount() {
-        let {data: products} = await get_products()
-        let {data: store} = await get_me()
+        const {data: products} = await get_products()
+        const {data: store} = await get_me()
 
         this.setState({products, store, isLoading: false})
 
