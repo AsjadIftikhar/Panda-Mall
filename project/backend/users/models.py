@@ -10,9 +10,9 @@ class User(AbstractUser):
 class Customer(models.Model):
     """Customer Model with OneToOne Association with User"""
 
-    MALE = "MALE"
-    FEMALE = "FEMALE"
-    OTHER = "OTHER"
+    MALE = "Male"
+    FEMALE = "Female"
+    OTHER = "Other"
 
     GENDER_CHOICES = [
         (MALE, "Male"),

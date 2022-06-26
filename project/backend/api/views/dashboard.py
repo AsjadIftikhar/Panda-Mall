@@ -42,10 +42,10 @@ class DashboardViewSet(viewsets.ViewSet):
         ).count()
 
         weekly_stats['products_this_week'] = current_week_products
-        weekly_stats['percentage_change_in_products'] = (
-            (current_week_products - previous_week_products / current_week_products) * 100
+        weekly_stats['percentage_change_in_products'] = float("{:.2f}". format(
+            ((current_week_products - previous_week_products) / current_week_products) * 100
             if current_week_products > 0 and previous_week_products > 0 else 0
-        )
+        ))
 
         # Visitors
         current_week_visitors = PurchaseHistory.objects.filter(
@@ -58,12 +58,12 @@ class DashboardViewSet(viewsets.ViewSet):
             created_at__lt=_7days,
             created_at__gt=_14days
         ).count()
-
+        print(current_week_visitors, previous_week_visitors)
         weekly_stats['visitors_this_week'] = current_week_visitors
-        weekly_stats['percentage_change_in_visitors'] = (
-            (current_week_visitors - previous_week_visitors / current_week_visitors) * 100
+        weekly_stats['percentage_change_in_visitors'] = float("{:.2f}". format(
+            ((current_week_visitors - previous_week_visitors )/ current_week_visitors) * 100
             if current_week_visitors > 0 and previous_week_visitors > 0 else 0
-        )
+        ))
 
         # Signups
         current_week_signups = User.objects.filter(
@@ -76,10 +76,10 @@ class DashboardViewSet(viewsets.ViewSet):
         ).count()
 
         weekly_stats['signups_this_week'] = current_week_signups
-        weekly_stats['percentage_change_in_signups'] = (
-            (current_week_signups - previous_week_signups / current_week_signups) * 100
+        weekly_stats['percentage_change_in_signups'] = float("{:.2f}". format(
+            ((current_week_signups - previous_week_signups) / current_week_signups) * 100
             if current_week_signups > 0 and previous_week_signups > 0 else 100
-        )
+        ))
 
         # Latest Users
         latest_customers = []
