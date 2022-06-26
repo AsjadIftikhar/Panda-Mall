@@ -114,7 +114,7 @@ class App extends Component {
                                        <Sidebar products_count={this.state.products.length}/>
                                        <div className="flex-1 px-6">
                                            <Navbar store={this.state.store}/>
-                                           <Breadcrumb title="Dashboard"
+                                           <Breadcrumb title={`${this.state.store['brand_name']} - Dashbaord`}
                                                        dir="Dashboard"/>
                                            <Dashboard/>
                                            <Footer/>

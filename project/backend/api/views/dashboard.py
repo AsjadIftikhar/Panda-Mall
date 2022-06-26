@@ -4,11 +4,13 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from datetime import datetime, timedelta
+from pandas_similarity.index_calculator import IndexCalculator
+import pandas as pd
 
 from api.models.products import Product
 from api.models.purchase_history import PurchaseHistory
 
-from api.serializers.dashboard import DashboadSerializer
+from api.serializers.dashboard import DashboadSerializer, SimilaritySerializer
 
 from users.models import User, Customer
 
@@ -22,7 +24,82 @@ def get_times():
 
 
 class DashboardViewSet(viewsets.ViewSet):
-    """View Set for Dashboard Stat"""
+    """View Set for Dashboard Stats"""
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    def get_similarity_list(self, request):
+        matrix = []
+        user_matrix = []
+
+        all_brands = pd.DataFrame(list(Product.objects.filter(store=self.request.user.store)[:100].values()))
+
+        user_history = PurchaseHistory.objects.all()
+        user_products = []
+        for history in user_history:
+            user_products.append(Product.objects.filter(id=history.product.id).values())
+
+        user_products = pd.DataFrame(user_products)
+        # Data Cleaning
+
+        # all_brands["discount"].fillna(0, inplace=True)
+        # all_brands["rating"].fillna(0, inplace=True)
+        # all_brands.fillna('Not Defined', inplace=True)
+        # all_brands["collars_type"].replace(0, "Not Defined", regex=True, inplace=True)
+        # all_brands = all_brands.reset_index(drop=True)
+
+        # user_products["discount"].fillna(0, inplace=True)
+        # user_products["rating"].fillna(0, inplace=True)
+        # user_products.fillna('Not Defined', inplace=True)
+        # user_products["collars_type"].replace(0, "Not Defined", regex=True, inplace=True)
+        # user_products = all_brands.reset_index(drop=True)
+
+        for i in range(0, len(all_brands)):
+            a = []
+            for j in range(0, len(all_brands)):
+                df = pd.DataFrame(all_brands.loc[[i, j]])
+                a.append(IndexCalculator(df).get_index())
+            matrix.append(a)
+
+        for i in range(0, len(user_products)):
+            a = []
+            for j in range(0, len(user_products)):
+                df = pd.DataFrame(user_products.loc[[i, j]])
+                a.append(IndexCalculator(df).get_index())
+            user_matrix.append(a)
+
+        print(matrix)
+        print(user_matrix)
+
+        data = {}
+
+        objs = []
+        for i in range(len(matrix)):
+            for j in range(len(matrix[i])):
+                obj = {
+                    "x": i,
+                    "y": matrix[i][j],
+                }
+                objs.append(obj)
+                j += 1
+            i += 1
+
+        user_objs = []
+        for i in range(len(user_matrix)):
+            for j in range(len(user_matrix[i])):
+                obj = {
+                    "x": i,
+                    "y": user_matrix[i][j],
+                }
+                user_objs.append(obj)
+                j += 1
+            i += 1
+
+
+        data['data'] = objs
+        data['user'] = user_objs
+
+        serializer = SimilaritySerializer(data)
+        return Response(serializer.data)
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
     def weekly_stats(self, request):
@@ -42,7 +119,7 @@ class DashboardViewSet(viewsets.ViewSet):
         ).count()
 
         weekly_stats['products_this_week'] = current_week_products
-        weekly_stats['percentage_change_in_products'] = float("{:.2f}". format(
+        weekly_stats['percentage_change_in_products'] = float("{:.2f}".format(
             ((current_week_products - previous_week_products) / current_week_products) * 100
             if current_week_products > 0 and previous_week_products > 0 else 0
         ))
@@ -58,10 +135,9 @@ class DashboardViewSet(viewsets.ViewSet):
             created_at__lt=_7days,
             created_at__gt=_14days
         ).count()
-        print(current_week_visitors, previous_week_visitors)
         weekly_stats['visitors_this_week'] = current_week_visitors
-        weekly_stats['percentage_change_in_visitors'] = float("{:.2f}". format(
-            ((current_week_visitors - previous_week_visitors )/ current_week_visitors) * 100
+        weekly_stats['percentage_change_in_visitors'] = float("{:.2f}".format(
+            ((current_week_visitors - previous_week_visitors) / current_week_visitors) * 100
             if current_week_visitors > 0 and previous_week_visitors > 0 else 0
         ))
 
@@ -76,7 +152,7 @@ class DashboardViewSet(viewsets.ViewSet):
         ).count()
 
         weekly_stats['signups_this_week'] = current_week_signups
-        weekly_stats['percentage_change_in_signups'] = float("{:.2f}". format(
+        weekly_stats['percentage_change_in_signups'] = float("{:.2f}".format(
             ((current_week_signups - previous_week_signups) / current_week_signups) * 100
             if current_week_signups > 0 and previous_week_signups > 0 else 100
         ))
