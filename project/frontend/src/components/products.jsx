@@ -111,13 +111,13 @@ class Products extends Component {
             </div>
         )
 
-        if (this.props.products.length === 0) return (
-
-            <div className="text-center py-8 animate-pulse">
-                <p className="text-xl text-gray-900">No
-                    Products Found</p>
-            </div>
-        )
+        // if (this.props.products.length === 0) return (
+        //
+        //     <div className="text-center py-8 animate-pulse">
+        //         <p className="text-xl text-gray-900">No
+        //             Products Found</p>
+        //     </div>
+        // )
 
 
         let products = this.props.products
