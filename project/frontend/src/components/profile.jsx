@@ -53,13 +53,13 @@ class ProfileComponent extends React.Component {
                 window.location = "/"
             }
 
-            this.setState({successMsg: "Successfully Updated Profile"})
+            this.setState({success: "Successfully Updated Profile"})
 
         } catch (err) {
             if (!err?.response) {
-                this.setState({errMsg: 'No Server Response'})
+                this.setState({err: 'No Server Response'})
             } else {
-                this.setState({errMsg: 'Try Again! Failed to Update Store Profile'})
+                this.setState({err: 'Try Again! Failed to Update Store Profile'})
             }
         }
     }

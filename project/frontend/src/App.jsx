@@ -101,7 +101,7 @@ class App extends Component {
                                                      onEdit={this.handleEditProduct}
                                                      products={this.state.products}
                                                      isLoading={this.state.isLoading}
-                                                     sucess={this.state.success}
+                                                     success={this.state.success}
                                                      err={this.state.err}
                                            />
                                            <Footer/>
