@@ -22,7 +22,7 @@ A complete description of the entire project can be found in the following Docum
 
 ### Login Page
 
-<img src="imgs/login.png" alt="Login" width="400"/>
+<img src="imgs/login.png" alt="Login" />
 
 ### Home Page CRUD
 
