@@ -26,18 +26,18 @@ A complete description of the entire project can be found in the following Docum
 
 ### Home Page CRUD
 
-<img src="imgs/home.png" alt="HOME" width="400"/>
-<img src="imgs/Add.png" alt="ADD" width="400"/>
+<img src="imgs/home.png" alt="HOME" />
+<img src="imgs/Add.png" alt="ADD" />
 
 
 ### Dashboard
 
-<img src="imgs/dash1.png" alt="Dashboard" width="400"/>
-<img src="imgs/dash2.png" alt="Dashboard 2" width="400"/>
+<img src="imgs/dash1.png" alt="Dashboard" />
+<img src="imgs/dash2.png" alt="Dashboard 2" />
 
 ### Profile Page
 
-<img src="imgs/profile.png" alt="Profile" width="400"/>
+<img src="imgs/profile.png" alt="Profile" />
 
 ## Installation
 
