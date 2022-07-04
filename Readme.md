@@ -22,22 +22,22 @@ A complete description of the entire project can be found in the following Docum
 
 ### Login Page
 
-<img src="imgs/login.png" alt="Login" width="300"/>
+<img src="imgs/login.png" alt="Login" width="400"/>
 
 ### Home Page CRUD
 
-<img src="imgs/home.png" alt="HOME" width="300"/>
-<img src="imgs/Add.png" alt="ADD" width="300"/>
+<img src="imgs/home.png" alt="HOME" width="400"/>
+<img src="imgs/Add.png" alt="ADD" width="400"/>
 
 
 ### Dashboard
 
-<img src="dash1.png" alt="Dashboard" width="300"/>
-<img src="dash2.png" alt="Dashboard 2" width="300"/>
+<img src="imgs/dash1.png" alt="Dashboard" width="400"/>
+<img src="imgs/dash2.png" alt="Dashboard 2" width="400"/>
 
 ### Profile Page
 
-<img src="profile.png" alt="Profile" width="300"/>
+<img src="imgs/profile.png" alt="Profile" width="400"/>
 
 ## Installation
 
