@@ -41,7 +41,7 @@ class Register extends Component {
                 const response = await register(this.state.new_user)
                 if (response.status === 201) {
                     await login(this.state.new_user)
-                    this.props.navigate('/profile')
+                    this.props.navigate('/me')
 
                 }
 

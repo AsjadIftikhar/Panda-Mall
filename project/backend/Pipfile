@@ -12,6 +12,8 @@ django-filter = "*"
 django-cors-headers = "*"
 djoser = "*"
 djangorestframework-simplejwt = "*"
+pandas = "*"
+sklearn = "*"
 
 [dev-packages]
 

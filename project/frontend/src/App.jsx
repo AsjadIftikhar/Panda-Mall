@@ -21,47 +21,64 @@ class App extends Component {
         products: [],
         store: [],
         isLoading: true,
+
+        err: "",
+        success: "",
     };
 
 
     async componentDidMount() {
-        let {data: products} = await get_products()
-        let {data: store} = await get_me()
+        const {data: products} = await get_products()
+        const {data: store} = await get_me()
 
-        console.log(store)
         this.setState({products, store, isLoading: false})
 
     }
 
 
     handleDelete = async (id) => {
-        await delete_product(id)
+        try {
+            await delete_product(id)
 
-        const products = this.state.products.filter(p => p.id !== id)
-        this.setState({products})
+            const products = this.state.products.filter(p => p.id !== id)
+            this.setState({products, success: "Deleted!"})
+        } catch (ex) {
+            this.setState({err: "Failed to Delete Product!"})
+        }
+
 
     };
 
     handleAddProduct = async (product) => {
-        const response = await create_product(product)
+        try {
+            const response = await create_product(product)
 
-        const products = this.state.products;
-        products.push(response.data)
-        this.setState({products})
+            const products = this.state.products;
+            products.push(response.data)
+            this.setState({products, success: "Added!"})
+        } catch (ex) {
+            this.setState({err: "Failed to Add Product!"})
+        }
+
     };
 
     handleEditProduct = async (product) => {
-        let products = this.state.products;
-        await update_product(product)
+        try {
+            let products = this.state.products;
+            await update_product(product)
 
-        // Find index of specific object using findIndex method.
-        const product_index = products.findIndex((p => p.sku === product.sku));
+            // Find index of specific object using findIndex method.
+            const product_index = products.findIndex((p => p.sku === product.sku));
 
-        // Update object
-        products[product_index] = product
+            // Update object
+            products[product_index] = product
 
-        // Save
-        this.setState({products})
+            // Save
+            this.setState({products, success: "Updated!"})
+        } catch (ex) {
+            this.setState({err: "Failed to Aapply changes in Product!"})
+        }
+
     };
 
     render() {
@@ -83,7 +100,10 @@ class App extends Component {
                                                      onAdd={this.handleAddProduct}
                                                      onEdit={this.handleEditProduct}
                                                      products={this.state.products}
-                                                     isLoading={this.state.isLoading}/>
+                                                     isLoading={this.state.isLoading}
+                                                     success={this.state.success}
+                                                     err={this.state.err}
+                                           />
                                            <Footer/>
                                        </div>
                                    </>
@@ -94,7 +114,7 @@ class App extends Component {
                                        <Sidebar products_count={this.state.products.length}/>
                                        <div className="flex-1 px-6">
                                            <Navbar store={this.state.store}/>
-                                           <Breadcrumb title="Dashboard"
+                                           <Breadcrumb title={`${this.state.store['brand_name']} - Dashbaord`}
                                                        dir="Dashboard"/>
                                            <Dashboard/>
                                            <Footer/>
@@ -109,7 +129,7 @@ class App extends Component {
                                            <Navbar store={this.state.store}/>
                                            <Breadcrumb title="My Store"
                                                        dir="Profile Setup"/>
-                                           <ProfileComponent store={this.state.store}/>
+                                           <ProfileComponent/>
                                            <Footer/>
                                        </div>
                                    </>
@@ -127,6 +147,8 @@ class App extends Component {
                                                      onEdit={this.handleEditProduct}
                                                      products={this.state.products}
                                                      isLoading={this.state.isLoading}
+                                                     success={this.state.success}
+                                                     err={this.state.err}
                                            />
                                            <Footer/>
                                        </div>

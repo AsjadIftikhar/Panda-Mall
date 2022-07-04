@@ -108,9 +108,16 @@ class Products extends Component {
                         d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
                         fill="currentFill"/>
                 </svg>
-            </div>)
+            </div>
+        )
 
-        if (this.props.products.length === 0) return <p>No Products Found</p>
+        // if (this.props.products.length === 0) return (
+        //
+        //     <div className="text-center py-8 animate-pulse">
+        //         <p className="text-xl text-gray-900">No
+        //             Products Found</p>
+        //     </div>
+        // )
 
 
         let products = this.props.products
@@ -146,114 +153,36 @@ class Products extends Component {
                     className={`${(this.state.add_modal_on || this.state.update_modal_on ? 'opacity-20 blur-md' : '')} mt-4 border border-slate-100`}>
                     <div className="flex flex-col">
                         <div className="overflow-x-auto shadow-md sm:rounded-lg">
+                            {this.props.success && <div
+                                className="flex p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
+                                role="alert">
+                                <svg className="inline flex-shrink-0 mr-3 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path fillRule="evenodd"
+                                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                          clipRule="evenodd"/>
+                                </svg>
+                                <div>
+                                    <span className="font-medium">Success!</span> {this.props.success}
+                                </div>
+                            </div>
+                            }
+
+                            {this.props.err && <div
+                                className="flex p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                                role="alert">
+                                <svg className="inline flex-shrink-0 mr-3 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path fillRule="evenodd"
+                                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                          clipRule="evenodd"/>
+                                </svg>
+                                <div>
+                                    <span className="font-medium">{`Danger alert! ${this.props.err}`}</span>
+                                </div>
+                            </div>
+                            }
                             <div className="inline-block min-w-full align-middle dark:bg-gray-800">
-
-
-                                {/*Edit Product Form Modal*/}
-                                {/*<div id="products-edit-modal" aria-hidden="true"*/}
-                                {/*     className="hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">*/}
-
-                                {/*    <div className="relative w-full max-w-2xl px-4 h-full md:h-auto">*/}
-
-                                {/*        <div className="bg-white rounded-lg shadow relative">*/}
-
-                                {/*            <div className="flex items-start justify-between p-5 border-b rounded-t">*/}
-                                {/*                <h3 className="text-xl font-semibold">*/}
-                                {/*                    Edit Selected Product*/}
-                                {/*                </h3>*/}
-                                {/*                <button type="button"*/}
-                                {/*                        className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"*/}
-                                {/*                        data-modal-toggle="products-edit-modal">*/}
-                                {/*                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"*/}
-                                {/*                         xmlns="http://www.w3.org/2000/svg">*/}
-                                {/*                        <path fillRule="evenodd"*/}
-                                {/*                              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"*/}
-                                {/*                              clipRule="evenodd"/>*/}
-                                {/*                    </svg>*/}
-                                {/*                </button>*/}
-                                {/*            </div>*/}
-
-                                {/*            <div className="p-6 space-y-6">*/}
-                                {/*                <form onSubmit={this.handleEditProduct}>*/}
-                                {/*                    <div className="grid grid-cols-6 gap-6">*/}
-                                {/*                        <div className="col-span-6 sm:col-span-3">*/}
-                                {/*                            <label htmlFor="product-name"*/}
-                                {/*                                   className="text-sm font-medium text-gray-900 block mb-2">SKU</label>*/}
-                                {/*                            <input type="text"*/}
-                                {/*                                   name="SKU"*/}
-                                {/*                                   id="SKU"*/}
-                                {/*                                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"*/}
-                                {/*                                   placeholder="FS1297SF"*/}
-                                {/*                                   value={product.sku}*/}
-                                {/*                                   onChange={this.handleFormChange}*/}
-                                {/*                                   required=""/>*/}
-                                {/*                        </div>*/}
-                                {/*                        <div className="col-span-6 sm:col-span-3">*/}
-                                {/*                            <label htmlFor="category"*/}
-                                {/*                                   className="text-sm font-medium text-gray-900 block mb-2">Title</label>*/}
-                                {/*                            <input type="text"*/}
-                                {/*                                   name="Product_Title"*/}
-                                {/*                                   id="Product_Title"*/}
-                                {/*                                   value={product.title}*/}
-                                {/*                                   onChange={this.handleFormChange}*/}
-                                {/*                                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"*/}
-                                {/*                                   placeholder="Plain Brown Smart Fit Shirt"*/}
-                                {/*                                   required=""/>*/}
-                                {/*                        </div>*/}
-                                {/*                        <div className="col-span-6 sm:col-span-3">*/}
-                                {/*                            <label htmlFor="brand"*/}
-                                {/*                                   className="text-sm font-medium text-gray-900 block mb-2">Color</label>*/}
-                                {/*                            <input type="text"*/}
-                                {/*                                   name="Color"*/}
-                                {/*                                   id="Color"*/}
-                                {/*                                   value={product.color}*/}
-                                {/*                                   onChange={this.handleFormChange}*/}
-                                {/*                                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"*/}
-                                {/*                                   placeholder="Brown"*/}
-                                {/*                                   required=""/>*/}
-                                {/*                        </div>*/}
-                                {/*                        <div className="col-span-6 sm:col-span-3">*/}
-                                {/*                            <label htmlFor="price"*/}
-                                {/*                                   className="text-sm font-medium text-gray-900 block mb-2">Price</label>*/}
-                                {/*                            <input type="number"*/}
-                                {/*                                   name="Selling_Price"*/}
-                                {/*                                   id="Selling_Price"*/}
-                                {/*                                   value={product.price}*/}
-                                {/*                                   onChange={this.handleFormChange}*/}
-                                {/*                                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"*/}
-                                {/*                                   placeholder="2300"*/}
-                                {/*                                   required=""/>*/}
-                                {/*                        </div>*/}
-                                {/*                        <div className="col-span-full">*/}
-                                {/*                            <label htmlFor="product-details"*/}
-                                {/*                                   className="text-sm font-medium text-gray-900 block mb-2">Image*/}
-                                {/*                                URL</label>*/}
-                                {/*                            <textarea id="Image_Url"*/}
-                                {/*                                      rows="4"*/}
-                                {/*                                      name="Image_Url"*/}
-                                {/*                                      value={product.image_url}*/}
-                                {/*                                      onChange={this.handleFormChange}*/}
-                                {/*                                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-4"*/}
-                                {/*                                      placeholder="https://uniworthdress.com/uploads/product/webp/FS1297SF..webp"/>*/}
-                                {/*                        </div>*/}
-                                {/*                    </div>*/}
-                                {/*                    <div className="p-6 border-t border-gray-200 rounded-b">*/}
-                                {/*                        <button*/}
-                                {/*                            className="flex text-white bg-gradient-to-r from-cyan-500 via-cyan-600 to-cyan-700 hover:bg-gradient-to-br focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800 shadow shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"*/}
-                                {/*                            type="submit"*/}
-                                {/*                            data-modal-toggle="products-edit-modal">*/}
-                                {/*                            Edit product*/}
-                                {/*                        </button>*/}
-                                {/*                    </div>*/}
-                                {/*                </form>*/}
-                                {/*            </div>*/}
-
-
-                                {/*        </div>*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
-                                {/*Edit Product Form Modal End*/}
-
                                 <div className="flex p-4">
                                     <label htmlFor="table-search" className="sr-only">Search</label>
                                     <div className="relative mt-1">

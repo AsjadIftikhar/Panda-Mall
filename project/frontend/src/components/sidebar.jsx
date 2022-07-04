@@ -81,11 +81,12 @@ class Sidebar extends Component {
                                     <span className="flex-1 ml-3 text-white">Profile</span>
                                 </NavLink>
                             </li>
-                            <li>
-                                <button onClick={() => {
+                            <li className="hover:bg-gray-400 rounded-lg"
+                                onClick={() => {
                                     logout()
                                     window.location = "/login"
-                                }}
+                                }}>
+                                <div
                                         className="flex items-center p-2 text-base font-normal text-gray-900
                                          rounded-lg dark:text-white hover:bg-gray-400 dark:hover:bg-gray-700">
                                     <svg
@@ -99,7 +100,7 @@ class Sidebar extends Component {
                                               clipRule="evenodd"/>
                                     </svg>
                                     <span className="flex-1 ml-3 whitespace-nowrap text-white">Sign Out</span>
-                                </button>
+                                </div>
                             </li>
                         </ul>
                         <ul className="pt-4 mt-4 space-y-2 border-t border-gray-600 dark:border-gray-700">
