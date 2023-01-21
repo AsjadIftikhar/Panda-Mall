@@ -6,11 +6,6 @@
 The Websites personalize the recommendation of fashion products based on customer preferences, history and improves results over time.
 It allows Brands to register their stores and add, delete, update products to be recommended to customers and guage the performance of the brand using the dashboard.
 It lets admins suspend products in case of policy Violation
- 
-It is an Final Year Project with following contributors:
-- Asjad Iftikhar
-- Tayyab Waseem
-- Muhammad Zain
 
 ## Features
 
